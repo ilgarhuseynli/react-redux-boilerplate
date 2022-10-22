@@ -1,0 +1,19 @@
+.btn[data-filter-count] {
+  position: relative;
+  &::after {
+    content: attr(data-filter-count);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--orange);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    color: #fff;
+  }
+}
