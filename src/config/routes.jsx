@@ -20,6 +20,8 @@ export const MAIN_API_URL = "https://service.ultrafixappliance.com/api/v1";
 
 export const API_ROUTES = {
 
+  authLogin: MAIN_API_URL + "/login",
+
   usersSearch: MAIN_API_URL + "/users/search",
 
 

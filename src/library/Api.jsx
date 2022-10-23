@@ -1,8 +1,9 @@
 import moment from "moment-timezone";
-import {API_ROUTES} from "../config";
+import {API_ROUTES} from "../config/routes";
+import {config} from "../config/config";
+import {serializeQuery} from "./utils";
 
 export class Api {
-  static routes = API_ROUTES;
 
   static async request(url, method = "GET", params) {
     let options = {
@@ -14,8 +15,8 @@ export class Api {
     }
     return await fetch(
       method === "GET"
-        ? `${this.routes[url]}?${serializeQuery(this.filterParams(params))}`
-        : this.routes[url],
+        ? `${API_ROUTES[url]}?${serializeQuery(this.filterParams(params))}`
+        : API_ROUTES[url],
       {
         method,
         mode: "cors",

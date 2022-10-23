@@ -1,8 +1,10 @@
 import "./login.scss"
 import {useState} from "react";
-import {useDispatch,useSelector} from "react-redux";
-import {useNavigate, Navigate, useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
 import {login} from "../../stores/auth";
+import {url} from "../../library/utils";
+import {Api} from "../../library/Api";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -11,58 +13,105 @@ const Login = () => {
     const {user} = useSelector(state => state.auth);
 
 
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault();
-        let userObj = {
-            email: 'Huseyn@gmail.com',
-            name: 'Huseyn',
-            surname: 'Aliyev',
-            age: 30,
-            password: '1234',
-        }
 
-        if (password === userObj.password){
-            dispatch(login(userObj))
+        //login request
 
-            let returnUrl = location.state?.return_url || '/'
+        let response = await Api.post('authLogin',{
+            email,
+            password
+        });
 
-            navigate(returnUrl)
-        }else{
-            alert('User not found');
-        }
+
+        console.log(response)
+
+        // if (password === userObj.password) {
+        //     dispatch(login(userObj))
+        //
+        //     let returnUrl = location.state?.return_url || '/'
+        //
+        //     navigate(returnUrl)
+        // } else {
+        //     alert('User not found');
+        // }
     }
 
-    if (user){
-        return <Navigate to={'/'} />
+    if (user) {
+        return <Navigate to={'/'}/>
     }
 
     return (
-        <div className="login-container">
+        <div className="card-body p-4">
 
-            <h1>Login Page</h1>
+            <div className="text-center w-75 m-auto">
+                <h4 className="text-dark-50 text-center pb-0 fw-bold">Sign In</h4>
+                <p className="text-muted mb-4">Enter your email address and password to access admin panel.</p>
+            </div>
+
             <form className='login-form' onSubmit={loginHandler}>
 
-                <input
-                    type="text"
-                    name='email'
-                    value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
-                    placeholder='Email'
-                />
+                <div className="mb-3">
+                    <label htmlFor="emailaddress" className="form-label">Email address</label>
+                    <input
+                        type="email"
+                        required
+                        id="emailaddress"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder='Enter your email'
+                    />
+                </div>
 
-                <input
-                    type="password"
-                    name='password'
-                    value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
-                    placeholder='password'
-                />
+                <div className="mb-3">
+                    {/*<a href="pages-recoverpw.html" className="text-muted float-end">*/}
+                    {/*    <small>Forgot your password?</small>*/}
+                    {/*</a>*/}
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <div className="input-group input-group-merge">
+                        <input
+                            className="form-control"
+                            type={showPassword ? 'text' : 'password'}
+                            id="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder='Enter your password'
+                        />
+                        <div className={`input-group-text  ${showPassword ? 'show-password' : ''}`}
+                             onClick={() => setShowPassword(!showPassword)} data-password="false">
+                            <span className="password-eye"/>
+                        </div>
+                    </div>
+                </div>
 
-                <button type='submit'>Login</button>
+                <div className="mb-3 mb-3">
+                    <div className="form-check">
+                        <input type="checkbox" className="form-check-input" id="checkbox-signin"/>
+                        <label className="form-check-label" htmlFor="checkbox-signin">Remember me</label>
+                    </div>
+                </div>
+
+                <div className="mb-3 mb-0 text-center">
+                    <button className="btn btn-primary" type="submit"> Log In</button>
+                </div>
+
             </form>
+
+
+            <div className="row mt-3">
+                <div className="col-12 text-center">
+                    <p className="text-muted">Don't have an account?
+                        <Link to={url('auth.register')} className="text-muted ms-1"><b>Sign Up</b></Link>
+                    </p>
+                </div>
+            </div>
+
         </div>
     )
 }
