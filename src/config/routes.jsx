@@ -16,15 +16,18 @@ import {authMap} from "../library/utils";
 
 
 
-export const MAIN_API_URL = "https://service.ultrafixappliance.com/api/v1";
+export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
 
 export const API_ROUTES = {
 
   authLogin: MAIN_API_URL + "/login",
+  authLogout: MAIN_API_URL + "/logout",
+
 
   usersSearch: MAIN_API_URL + "/users/search",
 
-
+  //PUBLIC APIS
+  serviceList: MAIN_API_URL + "/services/list",
 };
 
 

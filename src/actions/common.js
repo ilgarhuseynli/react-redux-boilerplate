@@ -1,11 +1,14 @@
-import { config } from "@config";
-import { Api, getTimeBySeconds } from "fogito-core-ui";
+import {config} from "../config/config";
+import {Api} from "../library/Api";
 
 const getFromStorage = async (key, url, expire_time, params) => {
   let response = JSON.parse(window.localStorage.getItem(key) || false);
   if (response) {
     if (response.status === "success") {
-      if (response.create_time < getTimeBySeconds() - expire_time * 60) {
+
+      let currentTime = new Date().getTime() / 1000;
+
+      if (response.create_time < currentTime - expire_time * 60) {
         return await getFromAPI(key, url, params);
       }
       return response;
@@ -19,7 +22,9 @@ const getFromStorage = async (key, url, expire_time, params) => {
 const getFromAPI = async (key, url, params) => {
   let response = await Api.get(url, params);
   if (response.status === "success") {
-    response.create_time = getTimeBySeconds();
+    let currentTime = new Date().getTime() / 1000;
+
+    response.create_time = currentTime;
     window.localStorage.removeItem(key);
     window.localStorage.setItem(key, JSON.stringify(response));
   }
@@ -43,7 +48,3 @@ export const translations = async (params) => {
       params
   );
 };
-
-export async function usersMinList(params) {
-  return await Api.get("usersMinList", params);
-}

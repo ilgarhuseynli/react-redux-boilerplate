@@ -4,13 +4,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
 import {login} from "../../stores/auth";
 import {url} from "../../library/utils";
-import {Api} from "../../library/Api";
+import axios from "axios";
+import {API_ROUTES} from "../../config/routes";
+import {authLogin} from "../../actions";
+import {useToast} from "../../hooks/useToast";
+import {useCookie} from "../../hooks";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const {user} = useSelector(state => state.auth);
+    const toast = useToast();
 
 
     const [email, setEmail] = useState('');
@@ -20,25 +25,19 @@ const Login = () => {
     const loginHandler = async (e) => {
         e.preventDefault();
 
-        //login request
+        let response = await authLogin({email, password})
 
-        let response = await Api.post('authLogin',{
-            email,
-            password
-        });
+        if (response.data.status === 'success'){
+            let resData = response.data;
 
+            dispatch(login(resData.data))
 
-        console.log(response)
+            let returnUrl = location.state?.return_url || '/'
 
-        // if (password === userObj.password) {
-        //     dispatch(login(userObj))
-        //
-        //     let returnUrl = location.state?.return_url || '/'
-        //
-        //     navigate(returnUrl)
-        // } else {
-        //     alert('User not found');
-        // }
+            navigate(returnUrl)
+        }else{
+            toast.error(response.data.message);
+        }
     }
 
     if (user) {
