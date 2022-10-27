@@ -2,28 +2,26 @@ import "./login.scss"
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
-import {login} from "../../stores/auth";
+import {login} from "../../stores/authSlice";
 import {url} from "../../library/utils";
-import axios from "axios";
-import {API_ROUTES} from "../../config/routes";
 import {authLogin} from "../../actions";
-import {useToast} from "../../hooks/useToast";
-import {useCookie} from "../../hooks";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const {user} = useSelector(state => state.auth);
-    const toast = useToast();
 
 
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const loginHandler = async (e) => {
         e.preventDefault();
+
+        setLoading(true)
 
         let response = await authLogin({email, password})
 
@@ -35,8 +33,6 @@ const Login = () => {
             let returnUrl = location.state?.return_url || '/'
 
             navigate(returnUrl)
-        }else{
-            toast.error(response.data.message);
         }
     }
 
@@ -97,7 +93,10 @@ const Login = () => {
                 </div>
 
                 <div className="mb-3 mb-0 text-center">
-                    <button className="btn btn-primary" type="submit"> Log In</button>
+                    <button className="btn btn-primary fs-4" disabled={loading} type="submit">
+                        {loading && <i className='mdi mdi-refresh mdi-spin me-1' />}
+                        <span>Log In</span>
+                    </button>
                 </div>
 
             </form>

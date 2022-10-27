@@ -2,7 +2,7 @@ import "./register.scss"
 import {useReducer} from "react";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../stores/auth";
+import {login} from "../../stores/authSlice";
 import {url} from "../../library/utils";
 
 const Register = () => {

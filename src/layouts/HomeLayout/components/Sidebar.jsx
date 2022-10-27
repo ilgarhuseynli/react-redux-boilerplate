@@ -3,7 +3,7 @@ import 'simplebar-react/dist/simplebar.min.css';
 import {Link, useNavigate} from "react-router-dom";
 import {url} from "../../../library/utils";
 import {useDispatch} from "react-redux";
-import { logout} from "../../../stores/auth";
+import { logout} from "../../../stores/authSlice";
 import {authLogout} from "../../../actions";
 
 const Sidebar = () => {

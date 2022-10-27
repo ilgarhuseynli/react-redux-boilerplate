@@ -3,7 +3,7 @@ import routes from "./config/routes";
 import {useSelector} from "react-redux";
 
 function App() {
-    const {darkMode} = useSelector(state=>state.darkMode);
+    const {darkMode} = useSelector(state=>state.app);
 
     let router = createBrowserRouter(routes)
 

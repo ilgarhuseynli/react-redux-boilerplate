@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
-    darkMode : false,
+    darkMode : JSON.parse(localStorage.getItem('darkMode')) || false,
     sidebarOpen : true,
 }
 
@@ -17,7 +17,9 @@ const appSlice = createSlice({
             state.darkMode = action.payload;
         },
         toggle : (state) => {
-            state.darkMode = !state.darkMode;
+            let payload = !state.darkMode;
+            localStorage.setItem('darkMode',JSON.stringify(payload))
+            state.darkMode = payload;
         },
     }
 })
