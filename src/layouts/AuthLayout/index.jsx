@@ -1,12 +1,11 @@
 import {Outlet} from 'react-router-dom'
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Rightbar from "./components/Rightbar";
 import Footer from "./components/Footer";
 
 import "../../assets/styles/index.scss";
 
-const HomeLayout = () => {
+export default function AuthLayout() {
 
     return (
         <div>
@@ -18,14 +17,10 @@ const HomeLayout = () => {
                         <Navbar/>
                         <Outlet />
                     </div>
-                    <Footer />
+                    {/*<Footer />*/}
                 </div>
             </div>
-
-            <Rightbar/>
-
         </div>
     )
 };
 
-export default HomeLayout;

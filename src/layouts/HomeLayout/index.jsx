@@ -1,6 +1,6 @@
 import {Outlet} from 'react-router-dom'
 
-const AuthLayout = () => {
+export default function HomeLayout () {
     return (
         <>
             <div className="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
@@ -32,4 +32,3 @@ const AuthLayout = () => {
     );
 };
 
-export default AuthLayout;

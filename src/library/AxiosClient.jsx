@@ -9,9 +9,11 @@ const AxiosClient = () => {
         baseURL: process.env.REACT_APP_API_PATH,
         timeout: 1000,
         headers: {
+            // 'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        withCredentials:true,
     });
 
     // Set the AUTH token for any request

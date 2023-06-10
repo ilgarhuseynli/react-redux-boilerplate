@@ -1,12 +1,13 @@
-import "./login.scss"
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
 import {login} from "../../stores/authSlice";
 import {url} from "../../library/utils";
 import {authLogin} from "../../actions";
+import {CSRF_TOKEN_URL} from "../../config/routes";
+import AxiosClient from "../../library/AxiosClient";
 
-const Login = () => {
+const Index = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
+    const [remember, setRemember] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const loginHandler = async (e) => {
@@ -23,7 +25,9 @@ const Login = () => {
 
         setLoading(true)
 
-        let response = await authLogin({email, password})
+        await AxiosClient.get(CSRF_TOKEN_URL)
+
+        let response = await authLogin({email, password,remember})
 
         if (response.data.status === 'success'){
             let resData = response.data;
@@ -87,13 +91,21 @@ const Login = () => {
 
                 <div className="mb-3 mb-3">
                     <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="checkbox-signin"/>
+                        <input
+                            onClick={()=>setRemember(!remember)}
+                            value={remember}
+                            type="checkbox"
+                            className="form-check-input"
+                            id="checkbox-signin"
+                        />
                         <label className="form-check-label" htmlFor="checkbox-signin">Remember me</label>
                     </div>
                 </div>
 
                 <div className="mb-3 mb-0 text-center">
-                    <button className="btn btn-primary fs-4" disabled={loading} type="submit">
+                    <button className="btn btn-primary fs-4"
+                            disabled={loading}
+                            type="submit">
                         {loading && <i className='mdi mdi-refresh mdi-spin me-1' />}
                         <span>Log In</span>
                     </button>
@@ -114,4 +126,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Index

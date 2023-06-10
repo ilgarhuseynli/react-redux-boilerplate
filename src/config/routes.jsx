@@ -1,26 +1,21 @@
 import React from "react";
-import Home from "../pages/home/Home";
-import List from "../pages/list/List";
-import HomeLayout from "../layouts/HomeLayout/HomeLayout";
-import Single from "../pages/single/Single";
-import New from "../pages/new/New";
-import {userInputs} from "../formSource";
-import ProductView from "../pages/products/views/ProductView";
-import AddProduct from "../pages/products/views/AddProduct";
-import Products from "../pages/products";
-import AuthLayout from "../layouts/AuthLayout/AuthLayout";
-import Login from "../pages/login/Login";
-import Register from "../pages/register/Register";
-import Page404 from "../pages/page404/Page404";
 import {authMap} from "../library/utils";
-
+import Users from "../pages/Users";
+import Page404 from "../pages/ErrorPages/Page404";
+import Home from "../pages/Home";
+import AuthLayout from "../layouts/AuthLayout";
+import HomeLayout from "../layouts/HomeLayout";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
 
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
+export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
 
 export const API_ROUTES = {
 
   authLogin: MAIN_API_URL + "/login",
+  authRegister: MAIN_API_URL + "/register",
   authLogout: MAIN_API_URL + "/logout",
 
 
@@ -37,7 +32,7 @@ export const MENU_ROUTES = [
     icon: <i className="symbol feather feather-settings text-info" />,
     name: "home",
     auth: true,
-    element: <HomeLayout />,
+    element: <AuthLayout />,
     children: [
       {
         index:true,
@@ -48,58 +43,42 @@ export const MENU_ROUTES = [
       {
         path:'users',
         name:'users',
-        children:[
-          {
-            index:true,
-            name:'index',
-            auth: true,
-            element:<List />,
-          },
-          {
-            path:':userId',
-            name:'view',
-            auth: true,
-            element: <Single />
-          },
-          {
-            path:'new',
-            name:'create',
-            auth: true,
-            element: <New inputs={userInputs} title="Add New User" />
-          }
-        ]
+        auth: true,
+        element:<Users />,
       },
-      {
-        path:'products',
-        name:'products',
-        children:[
-          {
-            index:true,
-            name:'index',
-            auth: true,
-            element:<Products />,
-          },
-          {
-            path:':productId',
-            name:'view',
-            auth: true,
-            element: <ProductView />
-          },
-          {
-            path:'new',
-            name:'create',
-            auth: true,
-            element: <AddProduct />
-          }
-        ]
-      },
+
+
+      // {
+      //   path:'products',
+      //   name:'products',
+      //   children:[
+      //     {
+      //       index:true,
+      //       name:'index',
+      //       auth: true,
+      //       element:<Products />,
+      //     },
+      //     {
+      //       path:':productId',
+      //       name:'view',
+      //       auth: true,
+      //       element: <ProductView />
+      //     },
+      //     {
+      //       path:'new',
+      //       name:'create',
+      //       auth: true,
+      //       element: <AddProduct />
+      //     }
+      //   ]
+      // },
     ]
   },
   {
     path: "/auth",
     icon: <i className="symbol feather feather-settings text-info" />,
     name: "auth",
-    element: <AuthLayout />,
+    element: <HomeLayout />,
     children: [
       {
         path: "login",
