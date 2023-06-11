@@ -29,10 +29,8 @@ const Index = () => {
 
         let response = await authLogin({email, password,remember})
 
-        if (response.data.status === 'success'){
-            let resData = response.data;
-
-            dispatch(login(resData.data))
+        if (response.status === 'success'){
+            dispatch(login(response.data))
 
             let returnUrl = location.state?.return_url || '/'
 

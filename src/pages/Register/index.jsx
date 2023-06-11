@@ -36,9 +36,7 @@ const Index = () => {
 
         let response = await authRegister(state)
 
-        if (response.data.status === 'success'){
-            let resData = response.data;
-
+        if (response.status === 'success'){
             let returnUrl = location.state?.return_url || '/'
 
             navigate(returnUrl)

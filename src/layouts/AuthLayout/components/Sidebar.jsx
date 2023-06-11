@@ -14,7 +14,7 @@ const Sidebar = () => {
     const logoutHandler = async () => {
         let response = await authLogout()
 
-        if (response.data.status === 'success') {
+        if (response.status === 'success') {
             dispatch(logout());
             navigate(url('auth.login'))
         }

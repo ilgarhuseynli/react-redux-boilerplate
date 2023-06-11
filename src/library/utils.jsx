@@ -50,3 +50,8 @@ export const serializeQuery = (params, prefix) => {
     });
     return [].concat.apply([], query).join("&");
 };
+
+
+export const getCurrentTime = () =>{
+    return  new Date().getTime() / 1000;
+}

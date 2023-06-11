@@ -28,7 +28,7 @@ const AxiosClient = () => {
 
 
     instance.interceptors.response.use(function (response) {
-        return response;
+        return response.data;
     },function (error) {
 
         //if error unauthorized
