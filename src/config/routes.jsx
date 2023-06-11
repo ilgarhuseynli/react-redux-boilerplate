@@ -20,6 +20,7 @@ export const API_ROUTES = {
 
 
   usersSearch: MAIN_API_URL + "/users/search",
+  users: MAIN_API_URL + "/users",
 
   //PUBLIC APIS
   serviceList: MAIN_API_URL + "/services/list",

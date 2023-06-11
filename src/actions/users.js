@@ -3,6 +3,6 @@ import AxiosClient from "../library/AxiosClient";
 
 
 export async function userList(data) {
-    return await AxiosClient.post(API_ROUTES.authLogin, data).catch(err => err.response)
+    return await AxiosClient.get(API_ROUTES.users, data).catch(err => err.response)
 }
 
