@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setDarkMode, setSidebar} from "../../../stores/appSlice";
+import {Auth} from "../../../library/Auth";
 
 const Navbar = () => {
 
     const {darkMode,sidebarOpen} = useSelector(state => state.app)
     const dispatch = useDispatch()
+
 
     return (
         <div className="navbar-custom">
@@ -28,8 +30,8 @@ const Navbar = () => {
                             <img src="assets/images/users/avatar-6.jpg" alt="user-image" className="rounded-circle"/>
                         </span>
                         <span>
-                                <span className="account-user-name">Soeng Souy</span>
-                                <span className="account-position">Founder</span>
+                                <span className="account-user-name">{Auth.get('name')}</span>
+                                <span className="account-position">{Auth.get('email')}</span>
                         </span>
                     </a>
 

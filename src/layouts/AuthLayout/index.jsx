@@ -1,23 +1,32 @@
 import {Outlet} from 'react-router-dom'
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import {useEffect, useState} from "react";
+import {settings} from "../../actions";
+import {Auth} from "../../library/Auth";
 
 import "../../assets/styles/index.scss";
-import {useEffect} from "react";
-import {settings} from "../../actions";
+import {Loading} from "../../components/common/Loading";
 
 export default function AuthLayout() {
 
+    const [loading,setLoading] = useState(true);
+
    const getSettings = async () => {
         const response = await settings();
-        if (response) {
-            return {
-                account_data: response.account_data,
-                permissions: response.permissions,
-                timezone: response.timezone,
-            };
+
+        if (response.status === 'success') {
+            let resData = response.data;
+            Auth.setData({
+                ...resData.account_data,
+                permissions: resData.permissions,
+                timezone: resData.timezone,
+            });
         }
+
+        setTimeout(()=>{
+            setLoading(false)
+        },500)
     }
 
     useEffect(()=>{
@@ -25,6 +34,10 @@ export default function AuthLayout() {
         getSettings()
 
     },[])
+
+    if (loading){
+        return (<Loading type="whole" />)
+    }
 
     return (
         <div>

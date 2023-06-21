@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {config} from "../config/config";
 
 const initialState = {
     user : JSON.parse(localStorage.getItem('user')) || false,
@@ -18,6 +19,7 @@ const authSlice = createSlice({
         logout : (state) => {
             localStorage.removeItem('user')
             localStorage.removeItem('token')
+            localStorage.removeItem(`settings-${config.appID}`)
             state.user = false;
             state.token = false;
         },

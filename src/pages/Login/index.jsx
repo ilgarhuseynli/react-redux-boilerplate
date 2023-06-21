@@ -35,6 +35,8 @@ const Index = () => {
             let returnUrl = location.state?.return_url || '/'
 
             navigate(returnUrl)
+        }else{
+            setLoading(false)
         }
     }
 
