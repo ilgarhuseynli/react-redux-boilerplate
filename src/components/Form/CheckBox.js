@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Checkbox = ({
+export const CheckBox = ({
   label = null,
   checked = false,
   onChange,

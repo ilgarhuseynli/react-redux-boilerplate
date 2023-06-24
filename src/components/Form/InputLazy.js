@@ -1,8 +1,7 @@
-import * as React from "react";
-import { Lang } from "@lib/Lang";
+import React from "react";
 
 let typingTimeOut = null;
-export const LazyInput = ({
+export const InputLazy = ({
   value,
   onChange,
   timeout = 500,
@@ -17,7 +16,6 @@ export const LazyInput = ({
     let value = e.target.value;
     onChange(value);
     if (typingTimeOut) {
-      //Waits if user changes value again
       clearTimeout(typingTimeOut);
     }
     typingTimeOut = setTimeout(() => {
@@ -27,11 +25,9 @@ export const LazyInput = ({
 
   return (
     <input
-      className={className}
-      type={type}
-      placeholder={Lang.get(placeholder)}
-      value={value}
+      {...{ className, type, placeholder, value }}
       onChange={changeHandler}
     />
   );
 };
+

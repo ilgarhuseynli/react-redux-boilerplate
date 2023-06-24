@@ -3,10 +3,10 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import {useEffect, useState} from "react";
 import {settings} from "../../actions";
-import {Auth} from "../../library/Auth";
+import {Auth} from "@lib";
 
 import "../../assets/styles/index.scss";
-import {Loading} from "../../components/common/Loading";
+import {Loading} from "@components";
 
 export default function AuthLayout() {
 

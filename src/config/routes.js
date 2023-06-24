@@ -1,5 +1,5 @@
 import React from "react";
-import {authMap} from "../library/utils";
+import {authMap} from "@lib";
 import Users from "../pages/Users";
 import Page404 from "../pages/ErrorPages/Page404";
 import Home from "../pages/Home";

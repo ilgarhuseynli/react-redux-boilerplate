@@ -1,7 +1,7 @@
-import {config} from "../config/config";
-import {getCurrentTime} from "../library/utils";
+import {config} from "@config/config";
+import {getCurrentTime} from "@lib";
 import AxiosClient from "../library/AxiosClient";
-import {API_ROUTES} from "../config/routes";
+import {API_ROUTES} from "@config/routes";
 
 const getFromStorage = async (key, url, expire_time, params) => {
   let response = JSON.parse(window.localStorage.getItem(key) || false);

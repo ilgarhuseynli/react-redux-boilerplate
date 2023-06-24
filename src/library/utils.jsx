@@ -1,6 +1,6 @@
 import routes from "../config/routes";
 import {generatePath} from "react-router-dom";
-import {PrivateRoute} from "../components/common/PrivateRoute";
+import {PrivateRoute} from "@components";
 import React from "react";
 
 export const url = (path,params = {}) =>{
@@ -55,3 +55,22 @@ export const serializeQuery = (params, prefix) => {
 export const getCurrentTime = () =>{
     return  new Date().getTime() / 1000;
 }
+
+
+export const isEqual = (first_array = [], second_array = []) => {
+    let result = true;
+    if (first_array.length && second_array.length) {
+        if (first_array.length === second_array.length) {
+            first_array.map((item, key) => {
+                if (item !== second_array[key]) {
+                    result = false;
+                }
+            });
+        } else {
+            result = false;
+        }
+    } else {
+        result = false;
+    }
+    return result;
+};

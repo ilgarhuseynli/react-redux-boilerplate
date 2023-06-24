@@ -2,7 +2,7 @@ import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import routes from "./config/routes";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setDarkMode, setSidebar} from "./stores/appSlice";
+import {setDarkMode, setSidebar} from "@stores/appSlice";
 
 function App() {
     const {darkMode,sidebarOpen} = useSelector(state => state.app)

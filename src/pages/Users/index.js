@@ -1,6 +1,7 @@
 import React from "react";
 import {useEffect} from "react";
 import {userList} from "../../actions/users";
+import {TableCustom} from "./components";
 
 
 export default function Users(){
@@ -46,9 +47,10 @@ export default function Users(){
     };
 
 
-    useEffect(()=>{
-        loadData()
-    },[])
+    React.useEffect(() => {
+        loadData();
+    }, [state.limit, state.sort, state.sort_type, state.status,state.title]);
+
 
     return(
         <div className="container-fluid">
@@ -62,7 +64,13 @@ export default function Users(){
 
             <div className="row">
                 <div className="col-12">
-                    test
+
+                    <TableCustom
+                        state={state}
+                        setState={setState}
+                        loadData={loadData}
+                    />
+
                 </div>
             </div>
         </div>

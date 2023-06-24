@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setDarkMode, setSidebar} from "../../../stores/appSlice";
-import {Auth} from "../../../library/Auth";
+import {setDarkMode, setSidebar} from "@stores/appSlice";
+import {Auth} from "@lib";
 
 const Navbar = () => {
 

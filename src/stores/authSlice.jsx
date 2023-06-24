@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {config} from "../config/config";
+import {config} from "@config/config";
 
 const initialState = {
     user : JSON.parse(localStorage.getItem('user')) || false,

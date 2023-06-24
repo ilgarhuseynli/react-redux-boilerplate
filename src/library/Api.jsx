@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
-import {API_ROUTES} from "../config/routes";
-import {config} from "../config/config";
+import {API_ROUTES} from "@config/routes";
+import {config} from "@config/config";
 import {serializeQuery} from "./utils";
 
 export class Api {

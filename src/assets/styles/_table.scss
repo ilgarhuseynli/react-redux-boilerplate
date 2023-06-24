@@ -1,0 +1,12 @@
+table {
+  thead td {
+    padding: 1rem 0.5rem !important;
+  }
+  tbody td {
+    padding: 1rem 0.5rem !important;
+  }
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f4f6f899;
+  }
+}
+

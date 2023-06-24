@@ -1,10 +1,10 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
-import {login} from "../../stores/authSlice";
-import {url} from "../../library/utils";
+import {login} from "@stores/authSlice";
+import {url} from "@lib";
 import {authLogin} from "../../actions";
-import {CSRF_TOKEN_URL} from "../../config/routes";
+import {CSRF_TOKEN_URL} from "@config/routes";
 import AxiosClient from "../../library/AxiosClient";
 
 const Index = () => {

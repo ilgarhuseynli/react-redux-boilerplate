@@ -1,7 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import store from "../stores";
-import {logout} from "../stores/authSlice";
+import {logout} from "@stores/authSlice";
 
 const AxiosClient = () => {
     // Create instance

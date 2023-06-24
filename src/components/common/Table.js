@@ -1,7 +1,7 @@
 import React from "react";
-import { isEqual, inArray } from "@lib";
-import { ErrorBoundary, InputCheckbox } from "@components";
-import { Lang } from "@plugins";
+import { isEqual } from "@lib/utils";
+import { InputCheckbox } from "@components";
+import { Lang } from "@lib";
 
 export const Table = ({
   data = [],
@@ -130,8 +130,7 @@ export const Table = ({
   };
 
   return (
-    <ErrorBoundary>
-      <div className="d-flex flex-wrap w-100">
+      <div className="w-100">
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead>
@@ -175,7 +174,7 @@ export const Table = ({
                       <td className="text-center">
                         <InputCheckbox
                           theme="primary"
-                          checked={inArray(item.id, selectedIDs)}
+                          checked={selectedIDs.includes(item.id)}
                           onChange={() => onSelect(item.id)}
                         />
                       </td>
@@ -210,6 +209,5 @@ export const Table = ({
           </ul>
         </div>
       </div>
-    </ErrorBoundary>
   );
 };
