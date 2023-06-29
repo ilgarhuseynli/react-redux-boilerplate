@@ -3,7 +3,7 @@ import {Link, Route} from "react-router-dom";
 import {useState} from "react";
 import {productRows,productColumns} from "../../datatablesource";
 import ProductView from "./views/ProductView";
-import {url} from "../../library/utils";
+import {url} from "@lib";
 
 const Products = ({}) => {
     const [data, setData] = useState(productRows);

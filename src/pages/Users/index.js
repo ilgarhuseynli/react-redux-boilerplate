@@ -1,7 +1,7 @@
 import React from "react";
-import {useEffect} from "react";
-import {userList} from "../../actions/users";
-import {TableCustom} from "./components";
+import {userDelete, userList} from "@actions";
+import {HeaderCustom, TableCustom} from "./components";
+import {AlertLib} from "@lib";
 
 
 export default function Users(){
@@ -14,7 +14,8 @@ export default function Users(){
             count: 0,
             skip: 0,
             limit: 10,
-            title: "",
+            name: "",
+            status: "",
             selectedIDs: [],
             hiddenColumns: [],
             sort: "created_at",
@@ -31,11 +32,10 @@ export default function Users(){
             limit: state.limit || "",
             sort: state.sort || "",
             sort_type: state.sort_type || "",
-            title: state?.title || "",
+            name: state?.name || "",
             status: state.status?.value || "",
         });
 
-        console.log(response)
         if (response) {
             setState({ loading: false });
             if (response.status === "success") {
@@ -47,31 +47,64 @@ export default function Users(){
     };
 
 
+    const onDelete = async () => {
+        let confirmed = await AlertLib.deleteCondition()
+        if (!confirmed) return;
+
+        let count = 1;
+        let total = state.selectedIDs.length;
+        setState({ loading: true });
+        for (const id of state.selectedIDs) {
+            let response = await userDelete({ id });
+            if (response?.status === "success") {
+                if (count >= total) {
+                    setState({ loading: false, selectedIDs: [] });
+                    await AlertLib.toast({
+                        title: response.description,
+                        icon: "success",
+                    });
+                    await loadData();
+                }
+                count++;
+            } else {
+                setState({ loading: false });
+                await AlertLib.toast({
+                    title: response.description,
+                    icon: "error",
+                });
+            }
+        }
+    }
+
+
     React.useEffect(() => {
         loadData();
-    }, [state.limit, state.sort, state.sort_type, state.status,state.title]);
+    }, [
+        state.limit,
+        state.sort,
+        state.sort_type,
+        state.status,
+        state.name,
+    ]);
 
 
     return(
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-12">
-                    <div className="page-title-box">
-                        <h4 className="page-title">Users</h4>
-                    </div>
-                </div>
-            </div>
 
-            <div className="row">
-                <div className="col-12">
+            <HeaderCustom
+                state={state}
+                setState={setState}
+                onDelete={onDelete}
+                loadData={loadData}
+                path={'test'}
+            />
 
-                    <TableCustom
-                        state={state}
-                        setState={setState}
-                        loadData={loadData}
-                    />
-
-                </div>
+            <div>
+                <TableCustom
+                    state={state}
+                    setState={setState}
+                    loadData={loadData}
+                />
             </div>
         </div>
     )

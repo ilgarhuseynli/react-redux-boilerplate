@@ -24,7 +24,7 @@ const Navbar = () => {
 
                 <li className="dropdown notification-list">
                     <a className="nav-link dropdown-toggle nav-user arrow-none me-0"
-                       data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                       data-bs-toggle="dropdown"  role="button" aria-haspopup="false"
                        aria-expanded="false">
                         <span className="account-user-avatar">
                             <img src="assets/images/users/avatar-6.jpg" alt="user-image" className="rounded-circle"/>
@@ -41,27 +41,27 @@ const Navbar = () => {
                             <h6 className="text-overflow m-0">Welcome !</h6>
                         </div>
 
-                        <a href="javascript:void(0);" className="dropdown-item notify-item">
+                        <a className="dropdown-item notify-item">
                             <i className="mdi mdi-account-circle me-1"></i>
                             <span>My Account</span>
                         </a>
 
-                        <a href="javascript:void(0);" className="dropdown-item notify-item">
+                        <a className="dropdown-item notify-item">
                             <i className="mdi mdi-account-edit me-1"></i>
                             <span>Settings</span>
                         </a>
 
-                        <a href="javascript:void(0);" className="dropdown-item notify-item">
+                        <a className="dropdown-item notify-item">
                             <i className="mdi mdi-lifebuoy me-1"></i>
                             <span>Support</span>
                         </a>
 
-                        <a href="javascript:void(0);" className="dropdown-item notify-item">
+                        <a className="dropdown-item notify-item">
                             <i className="mdi mdi-lock-outline me-1"></i>
                             <span>Lock Screen</span>
                         </a>
 
-                        <a href="javascript:void(0);" className="dropdown-item notify-item">
+                        <a className="dropdown-item notify-item">
                             <i className="mdi mdi-logout me-1"></i>
                             <span>Logout</span>
                         </a>

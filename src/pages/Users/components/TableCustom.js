@@ -8,6 +8,7 @@ export const TableCustom = ({state, setState,loadData}) => {
     const columns = [
         {
             key: 'name',
+            sort: "name",
             name: Lang.get("Name"),
         },
         {
@@ -48,12 +49,13 @@ export const TableCustom = ({state, setState,loadData}) => {
         <Table
             data={state.data}
             loading={state.loading}
-            // columns={{all: columns, hidden: state.hiddenColumns}}
-            columns={columns}
+            columns={{all: columns, hidden: state.hiddenColumns}}
             pagination={{
                 skip: state.skip,
                 limit: state.limit,
                 count: state.count,
+                limitArray: [5, 10, 50, 100],
+                paginationItemLimit:5,
                 onTake: (limit) => setState({limit}),
                 onPaginate: (page) => loadData({skip: page * state.limit}),
             }}
@@ -63,6 +65,7 @@ export const TableCustom = ({state, setState,loadData}) => {
                 onSort: (sort) => setState({...sort}),
             }}
             select={{
+                selectable:true,
                 selectedIDs: state.selectedIDs,
                 onSelect: onSelect,
                 onSelectAll: onSelectAll,

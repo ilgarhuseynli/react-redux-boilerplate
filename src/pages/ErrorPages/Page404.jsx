@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {url} from "../../library/utils";
+import {url} from "@lib";
 
 const Page404 = () => {
   return (

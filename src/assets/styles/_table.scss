@@ -1,12 +1,29 @@
-table {
-  thead td {
-    padding: 1rem 0.5rem !important;
+//table {
+//  thead td {
+//    padding: 1rem 0.5rem !important;
+//  }
+//  tbody td {
+//    padding: 1rem 0.5rem !important;
+//  }
+//  &.table-striped tbody tr:nth-of-type(odd) {
+//    background-color: #f4f6f899;
+//  }
+//
+//}
+
+
+.custom-table-container{
+
+
+  .limit-select{
+    padding: 0.375rem 2.5rem 0.375rem 0.9rem;
   }
-  tbody td {
-    padding: 1rem 0.5rem !important;
+
+  .pagination .page-item{
+    cursor: pointer;
   }
-  &.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f4f6f899;
-  }
+
+
+
 }
 

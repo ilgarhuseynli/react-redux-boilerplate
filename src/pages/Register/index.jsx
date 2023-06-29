@@ -1,8 +1,8 @@
 import {useReducer} from "react";
 import {useNavigate, Navigate, useLocation, Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {url} from "../../library/utils";
-import {authRegister} from "../../actions";
+import {url} from "@lib";
+import {authRegister} from "@actions";
 import Swal from "sweetalert2";
 
 const Index = () => {

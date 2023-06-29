@@ -2,7 +2,7 @@ import {Outlet} from 'react-router-dom'
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import {useEffect, useState} from "react";
-import {settings} from "../../actions";
+import {settings} from "@actions";
 import {Auth} from "@lib";
 
 import "../../assets/styles/index.scss";
