@@ -7,6 +7,7 @@ module.exports = {
             '@': path.resolve(__dirname, 'src/'),
             "@config": sourcePath + "/config",
             "@actions": sourcePath + "/actions",
+            "@hooks": sourcePath + "/hooks",
             "@stores": sourcePath + "/stores",
             "@lib": sourcePath + "/library",
             "@components": sourcePath + "/components",

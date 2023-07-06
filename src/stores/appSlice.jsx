@@ -19,10 +19,10 @@ const appSlice = createSlice({
             if (darkModeVal){
                 document.body.setAttribute('data-leftbar-theme','dark');
                 document.getElementById('dark-style').removeAttribute('disabled');
-                document.getElementById('light-style').setAttribute('disabled','disabled');
+                // document.getElementById('light-style').setAttribute('disabled','disabled');
             }else{
                 document.body.setAttribute('data-leftbar-theme','light');
-                document.getElementById('light-style').removeAttribute('disabled');
+                // document.getElementById('light-style').removeAttribute('disabled');
                 document.getElementById('dark-style').setAttribute('disabled','disabled');
             }
 

@@ -1,23 +1,12 @@
-//@import "variables";
-//@import "content";
-//@import "sidebar";
-//@import "header";
-//@import "buttons";
-//@import "modal";
-//@import "alert";
-
-
+@import "variables";
+@import "buttons";
 @import "loading";
+@import "modal";
 @import "form";
-@import "content";
-@import "datatable";
 @import "table";
+@import "custom";
 
 
 
-//Custom
-*{
-  box-sizing: border-box;
-}
 
 

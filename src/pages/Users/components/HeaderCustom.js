@@ -4,10 +4,11 @@ import {Parameters} from "@lib";
 import {InputLazy} from "@components";
 import {Table} from "@components";
 
-export const HeaderCustom = ({state, setState, loadData, onDelete, path}) => {
+export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
 
     const columns = [
-        {name: "Name"},
+        {name: "Username"},
+        {name: "Role"},
         {name: "Email"},
         {name: "CreatedAt"},
     ];
@@ -20,7 +21,7 @@ export const HeaderCustom = ({state, setState, loadData, onDelete, path}) => {
                         data-filter-count={state.selectedIDs?.length}
                         className="btn btn-danger btn-block position-relative"
                         onClick={onDelete}>
-                        <i className="feather feather-trash me-0"/>
+                        <i className="uil-trash me-0"/>
                     </button>
                 </div>
             )}
@@ -72,7 +73,7 @@ export const HeaderCustom = ({state, setState, loadData, onDelete, path}) => {
 
             <div className="col-md-auto col-6 mt-md-0 mt-3 order-md-2 order-4 ms-md-auto">
                 <Table.ColumnFilter
-                    columns={{all: columns, hidden: state.hiddenColumns, required:1}}
+                    columns={{all: columns, hidden: state.hiddenColumns, required:0}}
                     className="btn btn-block btn-white"
                     setColumns={(hiddenColumns) => setState({hiddenColumns})}
                 >
@@ -83,7 +84,7 @@ export const HeaderCustom = ({state, setState, loadData, onDelete, path}) => {
             <div
                 className="col-md-auto col mt-md-0 mt-3 order-md-4 order-2"
             >
-                <Link to={`${path}/add`} className="btn btn-success btn-block">
+                <Link to={`add`} className="btn btn-success btn-block">
                     <i className="uil-plus"/>
                 </Link>
             </div>

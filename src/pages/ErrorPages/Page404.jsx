@@ -10,7 +10,7 @@ const Page404 = () => {
               <div className="card">
                 <div className="card-header pt-4 pb-4 text-center bg-primary">
                   <Link  to={url('home')} >
-                    <span><img src="assets/images/logo.png" alt="" height="18" /></span>
+                    <span><img src="/assets/images/logo.png" alt="" height="18" /></span>
                   </Link>
                 </div>
 

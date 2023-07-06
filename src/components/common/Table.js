@@ -36,6 +36,13 @@ export const Table = React.forwardRef(({
 
     let showedColumns = columns.all.filter((item,key)=> !columns.hidden.includes(key))
 
+    const [localLoading, setLocalLoading] = React.useState(loading);
+
+    React.useEffect(() => {
+        let timeout = loading ? 0 : 300;
+        setTimeout(() => {setLocalLoading(loading)}, timeout);
+    }, [loading]);
+
     const renderPaginationItem = (item) => {
         return (
             <li
@@ -138,10 +145,9 @@ export const Table = React.forwardRef(({
 
     return (
         <div className="custom-table-container row">
-            <div className="table-responsive position-relative">
-                {loading && <Loading/>}
-
-                <table ref={ref} className="table table-bordered table-striped">
+            <div className="table-responsive">
+                <table ref={ref} className="table table-bordered table-striped position-relative">
+                    {localLoading && <Loading/>}
                     <thead>
                     <tr>
                         {select && selectable && (
@@ -195,7 +201,7 @@ export const Table = React.forwardRef(({
                                     >
                                         {column.render
                                             ? column.render(
-                                                column.key === "actions" ? item : item[column.key]
+                                                column.key ? item[column.key] : item
                                             )
                                             : item[column.key]}
                                     </td>
@@ -271,7 +277,7 @@ Table.ColumnFilter = React.forwardRef(
                         <li className="list-group-item" key={key} >
                             <label>
                                 <input
-                                    checked={columns.hidden.includes(key)}
+                                    checked={!columns.hidden.includes(key)}
                                     disabled={key === columns.required}
                                     onChange={()=>onSetColumns(key)}
                                     className="form-check-input me-1"

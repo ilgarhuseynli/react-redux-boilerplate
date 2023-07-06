@@ -27,9 +27,7 @@ export const Modal = React.forwardRef(
     return (
       <div
         ref={ref}
-        className={classNames("frame__modal", className, {
-          show: visible,
-        })}
+        className={classNames("frame__modal", className, {show: visible,})}
         {...props}
       >
         {children}
@@ -75,34 +73,3 @@ Modal.Body = React.forwardRef(({ className, children, ...props }, ref) => {
     </div>
   );
 });
-
-export const Popup = ({
-  show = false,
-  title = "",
-  size = "sm",
-  onClose = () => console.log("No action passed!"),
-  children,
-}) => {
-  if (!show) return null;
-
-  return (
-    <div className="frame__dialog-backdrop" onClick={onClose}>
-      <div
-        className={classNames(
-          "dialog position-relative rounded bg-white mx-auto my-md-5 my-2 px-0 col-11",
-          {
-            "col-lg-9 col-md-10 col-sm-11": size === "lg",
-            "col-lg-6 col-md-7 col-sm-8": size === "md",
-            "col-lg-3 col-md-4 col-sm-5": size === "sm",
-          }
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="head rounded-top">
-          <h4 className="title mb-0">{title}</h4>
-        </div>
-        <div className="body rounded-bottom">{children}</div>
-      </div>
-    </div>
-  );
-};

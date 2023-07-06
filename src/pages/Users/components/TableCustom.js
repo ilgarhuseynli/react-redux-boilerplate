@@ -2,14 +2,24 @@ import React from "react";
 import {Lang} from "@lib";
 import {Table} from "@components";
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 export const TableCustom = ({state, setState,loadData}) => {
 
     const columns = [
         {
-            key: 'name',
-            sort: "name",
-            name: Lang.get("Name"),
+            sort: "username",
+            name: Lang.get("Username"),
+            render: (data) => (
+                <Link to={`edit/${data?.id}?`}>{data?.username}</Link>
+            ),
+        },
+        {
+            sort: "role",
+            name: Lang.get("Role"),
+            render: (data) => (
+                <>{data.role.label}</>
+            ),
         },
         {
             name: Lang.get("Email"),

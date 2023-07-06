@@ -1,6 +1,6 @@
 /* Spinner */
 .loading-container {
-  z-index: 10000;
+  z-index: 100;
   position: absolute;
   left: 0;
   top: 0;
@@ -16,4 +16,21 @@
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+
+.spinner {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

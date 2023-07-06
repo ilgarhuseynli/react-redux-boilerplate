@@ -35,14 +35,16 @@ const AxiosClient = () => {
         if (error.response.status === 401){
             //logout
             store.dispatch(logout())
+
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+                text: error.response.data.message,
+            })
         }
 
-        Swal.fire({
-            title: 'Error',
-            icon: 'error',
-            text: error.response.data.message,
-        })
-        return Promise.reject(error);
+        return error.response.data;
+        // return Promise.reject(error);
     });
 
     return instance;

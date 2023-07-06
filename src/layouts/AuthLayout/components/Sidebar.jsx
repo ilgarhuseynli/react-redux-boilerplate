@@ -24,13 +24,13 @@ const Sidebar = () => {
         <div className="leftside-menu">
 
             <Link to={url('home')} className="logo text-center logo-light">
-                <span className="logo-lg"><img src="assets/images/logo.png" alt="" height="16"/></span>
-                <span className="logo-sm"><img src="assets/images/logo_sm.png" alt="" height="16"/></span>
+                <span className="logo-lg"><img src="/assets/images/logo.png" alt="" height="16"/></span>
+                <span className="logo-sm"><img src="/assets/images/logo_sm.png" alt="" height="16"/></span>
             </Link>
 
             <Link to={url('home')} className="logo text-center logo-dark">
-                <span className="logo-lg"><img src="assets/images/logo-dark.png" alt="" height="16"/></span>
-                <span className="logo-sm"><img src="assets/images/logo_sm_dark.png" alt="" height="16"/></span>
+                <span className="logo-lg"><img src="/assets/images/logo-dark.png" alt="" height="16"/></span>
+                <span className="logo-sm"><img src="/assets/images/logo_sm_dark.png" alt="" height="16"/></span>
             </Link>
 
             <div className="h-100" id="leftside-menu-container">

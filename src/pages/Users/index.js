@@ -1,10 +1,12 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 import {userDelete, userList} from "@actions";
-import {HeaderCustom, TableCustom} from "./components";
+import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
 
 
 export default function Users(){
+    const navigate = useNavigate();
 
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
@@ -59,7 +61,7 @@ export default function Users(){
             if (response?.status === "success") {
                 if (count >= total) {
                     setState({ loading: false, selectedIDs: [] });
-                    await AlertLib.toast({
+                    AlertLib.toast({
                         title: response.description,
                         icon: "success",
                     });
@@ -91,12 +93,16 @@ export default function Users(){
     return(
         <div className="container-fluid">
 
+            <ViewRoutes
+                onClose={()=>navigate('/users')}
+                loadData={loadData}
+            />
+
             <HeaderCustom
                 state={state}
                 setState={setState}
                 onDelete={onDelete}
                 loadData={loadData}
-                path={'test'}
             />
 
             <div>

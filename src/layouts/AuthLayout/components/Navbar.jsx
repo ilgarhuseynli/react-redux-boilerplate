@@ -27,7 +27,7 @@ const Navbar = () => {
                        data-bs-toggle="dropdown"  role="button" aria-haspopup="false"
                        aria-expanded="false">
                         <span className="account-user-avatar">
-                            <img src="assets/images/users/avatar-6.jpg" alt="user-image" className="rounded-circle"/>
+                            <img src="/assets/images/users/avatar-6.jpg" alt="user-image" className="rounded-circle"/>
                         </span>
                         <span>
                                 <span className="account-user-name">{Auth.get('name')}</span>

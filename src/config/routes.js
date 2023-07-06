@@ -26,7 +26,7 @@ export const API_ROUTES = {
 
   usersSearch: MAIN_API_URL + "/users/search",
   users: MAIN_API_URL + "/users",
-
+  roles: MAIN_API_URL + "/roles",
 
 
 };
@@ -47,7 +47,7 @@ export const MENU_ROUTES = [
         element:<Home />,
       },
       {
-        path:'users',
+        path:'users/*',
         name:'users',
         auth: true,
         element:<Users />,

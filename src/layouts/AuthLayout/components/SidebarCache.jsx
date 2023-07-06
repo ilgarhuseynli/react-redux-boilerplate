@@ -8,19 +8,19 @@ const SidebarCache = () => {
         <div className="leftside-menu">
             <a href="index.html" className="logo text-center logo-light">
                     <span className="logo-lg">
-                        <img src="assets/images/logo.png" alt="" height="16"/>
+                        <img src="/assets/images/logo.png" alt="" height="16"/>
                     </span>
                 <span className="logo-sm">
-                        <img src="assets/images/logo_sm.png" alt="" height="16"/>
+                        <img src="/assets/images/logo_sm.png" alt="" height="16"/>
                     </span>
             </a>
 
             <a href="index.html" className="logo text-center logo-dark">
                     <span className="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="" height="16"/>
+                        <img src="/assets/images/logo-dark.png" alt="" height="16"/>
                     </span>
                 <span className="logo-sm">
-                        <img src="assets/images/logo_sm_dark.png" alt="" height="16"/>
+                        <img src="/assets/images/logo_sm_dark.png" alt="" height="16"/>
                     </span>
             </a>
 

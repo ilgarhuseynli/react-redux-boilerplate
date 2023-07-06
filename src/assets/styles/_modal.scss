@@ -103,6 +103,15 @@
   }
 }
 
+
+.modal.show {
+  display: block;
+  overflow: hidden auto;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0,0,0,.3);
+}
+
+
 @media (max-width: 1200px) {
   .frame__modal {
     left: 0 !important;
