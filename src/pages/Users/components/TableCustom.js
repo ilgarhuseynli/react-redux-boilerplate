@@ -11,7 +11,7 @@ export const TableCustom = ({state, setState,loadData}) => {
             sort: "username",
             name: Lang.get("Username"),
             render: (data) => (
-                <Link to={`edit/${data?.id}?`}>{data?.username}</Link>
+                <Link to={`edit/${data?.id}`}>{data?.username}</Link>
             ),
         },
         {

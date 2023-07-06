@@ -3,14 +3,11 @@ import {
     Loading, Popup, Spinner,
 } from "@components";
 import {AlertLib} from "@lib";
-import {userInfo, userStore, userUpdate} from "@actions";
-import {useParams} from "react-router-dom";
+import {userStore} from "@actions";
 import {roleList} from "../../../../actions/roles";
 import Select from "react-select";
 
 export const Add = React.memo(({onClose, reload}) => {
-
-    let urlParams = useParams();
 
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
@@ -20,7 +17,6 @@ export const Add = React.memo(({onClose, reload}) => {
             saveLoading: false,
             roles: [],
             params: {
-                id: urlParams?.id,
                 username: '',
                 name: '',
                 role: '',
@@ -42,16 +38,10 @@ export const Add = React.memo(({onClose, reload}) => {
         setState({saveLoading: true});
         if (!state.saveLoading) {
 
-            let response
-            let requestParams = {
+            let response = await userStore({
                 ...state.params,
                 role_id:state.params.role?.value,
-            };
-            if (urlParams?.id) {
-                response = await userUpdate(requestParams);//edit
-            } else {
-                response = await userStore(requestParams);//add
-            }
+            });
 
             if (response) {
                 setState({saveLoading: false});
@@ -67,23 +57,6 @@ export const Add = React.memo(({onClose, reload}) => {
         }
     };
 
-    const loadInfo = async () => {
-        setState({loading: true})
-        let response = await userInfo({id: urlParams?.id});
-
-        if (response) {
-            setState({loading: false})
-            if (response.status === "success" && response.data) {
-                setParams(response.data);
-            } else {
-                AlertLib.toast({
-                    icon: "error",
-                    title: response.description,
-                });
-            }
-        }
-    };
-
 
     const loadData = async () => {
         let response = await roleList({});
@@ -94,9 +67,6 @@ export const Add = React.memo(({onClose, reload}) => {
 
     React.useEffect(() => {
         loadData()
-        if (urlParams?.id) {
-            loadInfo();
-        }
     }, []);
 
 
@@ -110,7 +80,7 @@ export const Add = React.memo(({onClose, reload}) => {
                     <i className="uil-angle-left"/>
                 </button>
             </div>
-            <h5 className="title fs-16">{urlParams?.id ? "Edit" : "Add"}</h5>
+            <h5 className="title fs-16">Add</h5>
             <div>
                 <button onClick={onSubmit} className="btn btn-primary px-4">
                     {state.saveLoading ? (<Spinner color="#fff" style={{ width: 30 }} />) : 'Save'}

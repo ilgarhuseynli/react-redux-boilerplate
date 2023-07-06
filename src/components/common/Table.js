@@ -145,9 +145,11 @@ export const Table = React.forwardRef(({
 
     return (
         <div className="custom-table-container row">
-            <div className="table-responsive">
-                <table ref={ref} className="table table-bordered table-striped position-relative">
-                    {localLoading && <Loading/>}
+            <div className="table-responsive position-relative">
+
+                {localLoading && <Loading/>}
+
+                <table ref={ref} className="table table-bordered table-striped ">
                     <thead>
                     <tr>
                         {select && selectable && (

@@ -25,3 +25,6 @@ export async function userUpdate(data) {
     return await AxiosClient.put(API_ROUTES.users+'/'+data.id,data).catch(err => err.response)
 }
 
+export async function userPasswordUpdate(data) {
+    return await AxiosClient.put(API_ROUTES.users+'/'+data.id,data).catch(err => err.response)
+}

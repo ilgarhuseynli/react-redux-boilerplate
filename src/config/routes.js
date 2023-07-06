@@ -7,6 +7,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import HomeLayout from "../layouts/HomeLayout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import {Info} from "../pages/Users/views";
 
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
@@ -46,38 +47,27 @@ export const MENU_ROUTES = [
         auth: true,
         element:<Home />,
       },
+
       {
-        path:'users/*',
         name:'users',
-        auth: true,
-        element:<Users />,
+        path:'users',
+        children:[
+          {
+            index:true,
+            path:'*',
+            name:'index',
+            auth: true,
+            element:<Users />,
+          },
+          {
+            path:'edit/:id',
+            name:'edit',
+            auth: true,
+            element: <Info />
+          },
+        ]
       },
 
-
-      // {
-      //   path:'products',
-      //   name:'products',
-      //   children:[
-      //     {
-      //       index:true,
-      //       name:'index',
-      //       auth: true,
-      //       element:<Products />,
-      //     },
-      //     {
-      //       path:':productId',
-      //       name:'view',
-      //       auth: true,
-      //       element: <ProductView />
-      //     },
-      //     {
-      //       path:'new',
-      //       name:'create',
-      //       auth: true,
-      //       element: <AddProduct />
-      //     }
-      //   ]
-      // },
     ]
   },
   {

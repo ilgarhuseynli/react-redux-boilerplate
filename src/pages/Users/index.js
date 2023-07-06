@@ -26,7 +26,6 @@ export default function Users(){
     );
 
 
-
     const loadData = async (params) => {
         setState({ loading: true, skip: params?.skip || 0 });
         let response = await userList({
@@ -34,7 +33,7 @@ export default function Users(){
             limit: state.limit || "",
             sort: state.sort || "",
             sort_type: state.sort_type || "",
-            name: state?.name || "",
+            username: state?.name || "",
             status: state.status?.value || "",
         });
 

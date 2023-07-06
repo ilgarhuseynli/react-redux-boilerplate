@@ -1,12 +1,24 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setDarkMode, setSidebar} from "@stores/appSlice";
-import {Auth} from "@lib";
+import {Auth, url} from "@lib";
+import {Link, useNavigate} from "react-router-dom";
+import {authLogout} from "@actions";
+import {logout} from "@stores/authSlice";
 
 const Navbar = () => {
 
     const {darkMode,sidebarOpen} = useSelector(state => state.app)
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
+    const logoutHandler = async () => {
+        let response = await authLogout()
+
+        if (response.status === 'success') {
+            dispatch(logout());
+            navigate(url('auth.login'))
+        }
+    }
 
     return (
         <div className="navbar-custom">
@@ -41,30 +53,15 @@ const Navbar = () => {
                             <h6 className="text-overflow m-0">Welcome !</h6>
                         </div>
 
-                        <a className="dropdown-item notify-item">
+                        <Link to={`users/edit/${Auth.get('id')}`} className="dropdown-item notify-item">
                             <i className="mdi mdi-account-circle me-1"></i>
                             <span>My Account</span>
-                        </a>
+                        </Link>
 
-                        <a className="dropdown-item notify-item">
-                            <i className="mdi mdi-account-edit me-1"></i>
-                            <span>Settings</span>
-                        </a>
-
-                        <a className="dropdown-item notify-item">
-                            <i className="mdi mdi-lifebuoy me-1"></i>
-                            <span>Support</span>
-                        </a>
-
-                        <a className="dropdown-item notify-item">
-                            <i className="mdi mdi-lock-outline me-1"></i>
-                            <span>Lock Screen</span>
-                        </a>
-
-                        <a className="dropdown-item notify-item">
+                        <span onClick={logoutHandler} className="dropdown-item notify-item">
                             <i className="mdi mdi-logout me-1"></i>
                             <span>Logout</span>
-                        </a>
+                        </span>
                     </div>
                 </li>
 
