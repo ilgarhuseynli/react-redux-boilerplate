@@ -122,7 +122,7 @@ export const Info = React.memo(({onClose, reload}) => {
                                 <div className="col-2 d-flex align-items-center justify-content-center">
                                     <img
                                         style={{height:'140px'}}
-                                        src="/assets/images/users/avatar-0.png"
+                                        src="/assets/images/users/avatar-03.png"
                                         className="rounded-circle img-fluid img-thumbnail"
                                         alt="profile-image"
                                     />

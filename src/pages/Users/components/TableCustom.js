@@ -15,13 +15,13 @@ export const TableCustom = ({state, setState,loadData}) => {
             ),
         },
         {
-            sort: "role",
             name: Lang.get("Role"),
             render: (data) => (
                 <>{data.role.label}</>
             ),
         },
         {
+            sort: 'email',
             name: Lang.get("Email"),
             key: 'email',
             center: false,

@@ -7,3 +7,13 @@
 .notify-item{
   cursor: pointer;
 }
+
+
+
+body[data-leftbar-theme=dark] {
+
+  .modal-content{
+    background: #37404a;
+  }
+
+}

@@ -22,6 +22,15 @@ export class Parameters {
         ];
     }
 
+    static getRoleList() {
+        return [
+            {value: '', label: 'All', color: '#fff'},
+            {value: '1', label: 'Moderator', color: '#2dce89'},
+            {value: '2', label: 'Employee', color: '#ffd600'},
+            {value: '3', label: 'User', color: '#ffd600'},
+        ];
+    }
+
     static getMonths() {
         return [
             'January',

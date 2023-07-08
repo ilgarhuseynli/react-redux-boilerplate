@@ -3,12 +3,18 @@ import {isEqual} from "@lib";
 import {InputCheckbox, Loading} from "@components";
 import {Lang} from "@lib";
 import classNames from "classnames";
+import {Skeleton} from "@mui/material";
 
 export const Table = React.forwardRef(({
                                            data = [],
                                            columns = {
                                                all: {},
                                                hidden: [],
+                                           },
+                                           sortable = {
+                                               sort: 'created_at',
+                                               sortType: 'desc',
+                                               onSort: ()=>{},
                                            },
                                            loading = false,
                                            pagination = {
@@ -20,7 +26,9 @@ export const Table = React.forwardRef(({
                                            },
                                            select = {selectable: false},
                                        }, ref) => {
-    let {selectable, selectedIDs, onSelect, onSelectAll} = select;
+
+    let {selectable, selectedIDs, onSelectAll} = select;
+
     let {
         count,
         skip,
@@ -30,6 +38,7 @@ export const Table = React.forwardRef(({
         onPaginate,
         onTake,
     } = pagination;
+
     let pageCount = Math.ceil(count / limit);
     let currentPage = skip / limit + 1;
     let limitCount = Math.round((paginationItemLimit - 1) / 2);
@@ -109,7 +118,7 @@ export const Table = React.forwardRef(({
                 <select
                     className="form-select limit-select w-auto me-2"
                     value={limit}
-                    onChange={(e) => onTake(e.target.value)}
+                    onChange={(e) => onTake(parseInt(e.target.value))}
                 >
                     {limitArray.map((item) => (
                         <option key={item} value={item}>
@@ -147,8 +156,6 @@ export const Table = React.forwardRef(({
         <div className="custom-table-container row">
             <div className="table-responsive position-relative">
 
-                {localLoading && <Loading/>}
-
                 <table ref={ref} className="table table-bordered table-striped ">
                     <thead>
                     <tr>
@@ -165,53 +172,21 @@ export const Table = React.forwardRef(({
                             </td>
                         )}
                         {showedColumns.map((item, key) => (
-                            <td
-                                className={`font-weight-bold ${
-                                    item.center ? "text-center" : "text-left"
-                                }`}
-                                style={{width: item.width || "auto"}}
+                            <TableHeadItem
+                                sortable={sortable}
+                                item={item}
                                 key={key}
-                            >
-                                {item.name}
-                            </td>
+                            />
                         ))}
                     </tr>
                     </thead>
-                    <tbody>
-                    {data.length === 0 ? (
-                        <tr>
-                            <td colSpan={showedColumns.length + 1} className="text-center">
-                                {Lang.get("No Data to Display")}
-                            </td>
-                        </tr>
-                    ) : (
-                        data.map((item, key) => (
-                            <tr key={key}>
-                                {select && selectable && (
-                                    <td className="text-center">
-                                        <InputCheckbox
-                                            theme="primary"
-                                            checked={selectedIDs.includes(item.id)}
-                                            onChange={() => onSelect(item.id)}
-                                        />
-                                    </td>
-                                )}
-                                {showedColumns.map((column, key) => (
-                                    <td
-                                        className={column.center ? "text-center" : "text-left"}
-                                        key={key}
-                                    >
-                                        {column.render
-                                            ? column.render(
-                                                column.key ? item[column.key] : item
-                                            )
-                                            : item[column.key]}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))
-                    )}
-                    </tbody>
+                    <TableBody
+                        data={data}
+                        select={select}
+                        paginationLimit={pagination.limit}
+                        localLoading={localLoading}
+                        showedColumns={showedColumns}
+                    />
                 </table>
             </div>
             <div className="col-md-4 d-flex align-items-center pl-0">
@@ -228,6 +203,176 @@ export const Table = React.forwardRef(({
         </div>
     );
 });
+
+
+
+
+const TableBody = ({localLoading,data,select,showedColumns,paginationLimit}) =>{
+
+    if (localLoading){
+        return (
+            <tbody>
+            {Array.from(new Array(paginationLimit)).map((row, key) => {
+                return (
+                    <tr key={key}>
+                        {
+                            select.selectable && (
+                                <td className="text-center">
+                                    <Skeleton animation="wave"/>
+                                </td>
+                            )
+                        }
+                        {
+                            showedColumns.map((column, key) => (
+                                <td key={key} className="text-center">
+                                    <Skeleton  animation="wave" />
+                                </td>
+                            ))
+                        }
+                    </tr>
+                )
+            })}
+            </tbody>
+        )
+    }
+
+
+    return(
+        <tbody>
+        {data.length === 0 && (
+            <tr>
+                <td colSpan={showedColumns.length + 1} className="text-center">
+                    {Lang.get("No Data to Display")}
+                </td>
+            </tr>
+        )}
+
+        {data.length> 0 && data.map((item, key) => (
+            <TableRowItem
+                showedColumns={showedColumns}
+                select={select}
+                item={item}
+                key={key}
+            />
+        ))}
+        </tbody>
+    )
+
+}
+
+
+
+
+const TableRowItem = ({item,select,showedColumns}) =>{
+
+    let {selectable, selectedIDs, onSelect} = select;
+
+    return (
+        <tr >
+            {select && selectable && (
+                <td className="text-center">
+                    <InputCheckbox
+                        theme="primary"
+                        checked={selectedIDs.includes(item.id)}
+                        onChange={() => onSelect(item.id)}
+                    />
+                </td>
+            )}
+            {showedColumns.map((column, key) => (
+                <td
+                    className={column.center ? "text-center" : "text-left"}
+                    key={key}
+                >
+                    {column.render
+                        ? column.render(
+                            column.key ? item[column.key] : item
+                        )
+                        : item[column.key]}
+                </td>
+            ))}
+        </tr>
+    )
+}
+
+
+
+
+const TableHeadItem = ({item,sortable}) =>{
+
+    if (!item.sort){
+        return (
+            <td
+                className={`font-weight-bold ${item.center ? "text-center" : "text-left"}`}
+                style={{width: item.width || "auto"}}
+            >
+                {item.name}
+            </td>
+        )
+    }
+
+    let isSelectedSort = item.sort === sortable.sort;
+
+    let upSortSelected = isSelectedSort && 'asc' === sortable.sortType;
+    let downSortSelected = isSelectedSort && 'desc' === sortable.sortType;
+
+    let upSortColor = upSortSelected ? "#4388b9" : "#D6D6D6";
+    let downSortColor = downSortSelected ? "#4388b9" : "#D6D6D6";
+
+
+    const onClickSort = () =>{
+        let isSelectedSort = item.sort === sortable.sort;
+
+        let sortType = 'asc';
+        if (isSelectedSort){
+            sortType = sortable.sortType === 'asc' ? 'desc' : 'asc';
+        }
+
+        sortable.onSort({sort:item.sort, sort_type: sortType })
+    }
+
+
+    return (
+        <td
+            className={`font-weight-bold ${item.center ? "text-center" : "text-left"}`}
+            style={{width: item.width || "auto" , cursor:'pointer'}}
+            onClick={onClickSort}
+        >
+            <div
+                className="d-flex align-items-center justify-content-start position-relative"
+                style={{paddingRight: '30px'}}
+            >
+                {item.name}
+
+                <div
+                    className="position-absolute d-flex align-items-center justify-content-center"
+                    style={{width: '30px', right: '0px'}}
+                >
+                    <svg width="7" height="13" viewBox="0 0 8 13" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <line x1="3.83142" y1="0.0800184" x2="3.83139" y2="12.14"
+                              stroke={downSortColor}></line>
+                        <path d="M3.4762 12.2529L7.01173 9.32945" stroke={downSortColor}></path>
+                        <line y1="-0.5" x2="4.58763" y2="-0.5"
+                              transform="matrix(-0.770667 -0.637238 0.770667 -0.637238 4.53552 11.9728)"
+                              stroke={downSortColor}
+                        ></line>
+                    </svg>
+                    <svg width="7" height="13" viewBox="0 0 8 13" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <line x1="3.53381" y1="12.7178" x2="3.53385" y2="0.657772"
+                              stroke={upSortColor}></line>
+                        <line y1="-0.5" x2="4.58763" y2="-0.5"
+                              transform="matrix(-0.770667 0.637238 -0.770667 -0.637238 3.53552 0.25293)"
+                              stroke={upSortColor}></line>
+                        <line y1="-0.5" x2="4.58763" y2="-0.5"
+                              transform="matrix(0.770667 0.637238 -0.770667 0.637238 2.82971 0.825195)"
+                              stroke={upSortColor}></line>
+                    </svg>
+                </div>
+            </div>
+        </td>
+    )
+}
 
 
 Table.ColumnFilter = React.forwardRef(

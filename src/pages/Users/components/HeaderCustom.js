@@ -49,19 +49,20 @@ export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
                         onChange={() => { }}
                         action={(name) => setState({name})}
                         className="form-control"
-                        placeholder={"Name"}
+                        placeholder={"Username"}
                     />
                 </div>
             </div>
             <div className="col-lg-3 col-md-3 col-12 mt-md-0 mt-3 order-md-2 order-3">
                 <div className="input-group">
+                    <span className="input-group-text">Role</span>
+
                     <select
-                        value={state.status}
-                        placeholder={"All"}
-                        onChange={e => setState({status:e.target.value})}
+                        value={state.role}
+                        onChange={e => setState({role:e.target.value})}
                         className="form-select"
                     >
-                        {Parameters.getStatusList().map((item) => (
+                        {Parameters.getRoleList().map((item) => (
                             <option key={item.value} value={item.value}>
                                 {item.label}
                             </option>

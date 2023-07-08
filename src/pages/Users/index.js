@@ -17,7 +17,7 @@ export default function Users(){
             skip: 0,
             limit: 10,
             name: "",
-            status: "",
+            role: "",
             selectedIDs: [],
             hiddenColumns: [],
             sort: "created_at",
@@ -34,8 +34,9 @@ export default function Users(){
             sort: state.sort || "",
             sort_type: state.sort_type || "",
             username: state?.name || "",
-            status: state.status?.value || "",
+            role: state.role || "",
         });
+
 
         if (response) {
             setState({ loading: false });
@@ -84,7 +85,7 @@ export default function Users(){
         state.limit,
         state.sort,
         state.sort_type,
-        state.status,
+        state.role,
         state.name,
     ]);
 
