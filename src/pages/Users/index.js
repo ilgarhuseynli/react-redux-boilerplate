@@ -34,7 +34,7 @@ export default function Users(){
             sort: state.sort || "",
             sort_type: state.sort_type || "",
             username: state?.name || "",
-            role: state.role || "",
+            role: state.role?.value || "",
         });
 
 
@@ -102,7 +102,7 @@ export default function Users(){
                 state={state}
                 setState={setState}
                 onDelete={onDelete}
-                loadData={loadData}
+                reload={loadData}
             />
 
             <div>

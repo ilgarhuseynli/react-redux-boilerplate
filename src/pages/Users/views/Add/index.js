@@ -3,8 +3,7 @@ import {
     Loading, Popup, Spinner,
 } from "@components";
 import {AlertLib} from "@lib";
-import {userStore} from "@actions";
-import {roleList} from "../../../../actions/roles";
+import {parameters, userStore} from "@actions";
 import Select from "react-select";
 
 export const Add = React.memo(({onClose, reload}) => {
@@ -59,7 +58,7 @@ export const Add = React.memo(({onClose, reload}) => {
 
 
     const loadData = async () => {
-        let response = await roleList({});
+        let response = await parameters({name:'roles'});
 
         setState({roles: response?.data})
     };
@@ -114,10 +113,7 @@ export const Add = React.memo(({onClose, reload}) => {
                     <label className="form-label">Role</label>
                     <Select
                         isClearable
-                        options={state.roles.map((row) => ({
-                            label: row.title,
-                            value: row.id,
-                        }))}
+                        options={state.roles}
                         value={state.params.role}
                         onChange={(role) => setParams({role})}
                         placeholder='Role'

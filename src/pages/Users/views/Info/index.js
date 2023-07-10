@@ -1,8 +1,7 @@
 import React from "react";
 import {AlertLib} from "@lib";
-import {userInfo, userPasswordUpdate, userUpdate} from "@actions";
+import {parameters, userInfo, userPasswordUpdate, userUpdate} from "@actions";
 import {useParams} from "react-router-dom";
-import {roleList} from "../../../../actions/roles";
 import {Loading, Spinner} from "@components";
 import Select from "react-select";
 
@@ -84,7 +83,7 @@ export const Info = React.memo(({onClose, reload}) => {
     const loadData = async () => {
         setState({loading: true})
 
-        let roleData = await roleList({});
+        let roleData = await parameters({name:'roles'});
 
         setState({roles: roleData?.data})
 
@@ -207,10 +206,7 @@ export const Info = React.memo(({onClose, reload}) => {
                                             <label className="form-label">Role</label>
                                             <Select
                                                 isClearable
-                                                options={state.roles?.map((row) => ({
-                                                    label: row.title,
-                                                    value: row.id,
-                                                }))}
+                                                options={state.roles}
                                                 value={state.params.role}
                                                 onChange={(role) => setParams({role})}
                                                 placeholder='Role'

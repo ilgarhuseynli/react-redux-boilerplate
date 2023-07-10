@@ -29,14 +29,15 @@ const AxiosClient = () => {
 
     instance.interceptors.response.use(function (response) {
         return response.data;
-    },function (error) {
+    }, async function(error) {
 
         //if error unauthorized
-        if (error.response.status === 401){
+        if (error.response.status === 401 || error.response.status === 500 ){
             //logout
-            store.dispatch(logout())
+            if (error.response.status === 401)
+                store.dispatch(logout())
 
-            Swal.fire({
+            await Swal.fire({
                 title: 'Error',
                 icon: 'error',
                 text: error.response.data.message,

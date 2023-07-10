@@ -47,3 +47,9 @@ export const translations = async (params) => {
       params
   );
 };
+
+
+
+export async function parameters(data) {
+  return await AxiosClient.get(API_ROUTES.parameters, {params:data}).catch(err => err.response)
+}

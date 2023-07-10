@@ -1,10 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {Parameters} from "@lib";
 import {InputLazy} from "@components";
 import {Table} from "@components";
+import {parameters} from "@actions";
+import Select from "react-select";
 
-export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
+export const HeaderCustom = ({state, setState, reload, onDelete}) => {
+
+    const [roles,setRoles] = useState([]);
 
     const columns = [
         {name: "Username"},
@@ -12,6 +16,17 @@ export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
         {name: "Email"},
         {name: "CreatedAt"},
     ];
+
+    const loadData = async () => {
+        let response = await parameters({name:'roles'});
+
+        setRoles(response?.data)
+    };
+
+    React.useEffect(() => {
+        loadData()
+    }, []);
+
 
     return (
         <div className="row my-3">
@@ -31,7 +46,7 @@ export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
                 <div className="col-md-auto col mt-md-0 mt-3">
                     <button
                         className="btn btn-light btn-white"
-                        onClick={() => loadData()}
+                        onClick={() => reload()}
                     >
                         <i  className="uil-refresh text-primary"></i>
                     </button>
@@ -57,17 +72,14 @@ export const HeaderCustom = ({state, setState, loadData, onDelete}) => {
                 <div className="input-group">
                     <span className="input-group-text">Role</span>
 
-                    <select
+                    <Select
+                        isClearable
+                        options={roles}
                         value={state.role}
-                        onChange={e => setState({role:e.target.value})}
-                        className="form-select"
-                    >
-                        {Parameters.getRoleList().map((item) => (
-                            <option key={item.value} value={item.value}>
-                                {item.label}
-                            </option>
-                        ))}
-                    </select>
+                        onChange={role => setState({role})}
+                        placeholder='Role'
+                        className='form-control'
+                    />
 
                 </div>
             </div>

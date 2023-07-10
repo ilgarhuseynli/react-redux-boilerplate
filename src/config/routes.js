@@ -25,9 +25,11 @@ export const API_ROUTES = {
   authLogout: MAIN_API_URL + "/logout",
 
 
+  permissions: MAIN_API_URL + "/permissions",
+  parameters: MAIN_API_URL + "/parameters",
+
   usersSearch: MAIN_API_URL + "/users/search",
   users: MAIN_API_URL + "/users",
-  roles: MAIN_API_URL + "/roles",
 
 
 };

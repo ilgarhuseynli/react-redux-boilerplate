@@ -41,9 +41,9 @@ export class AlertLib {
     return res.isConfirmed
   }
 
-  static toast = async (props) =>{
+  static toast = (props) =>{
 
-    return await Swal.fire({
+    Swal.fire({
       toast: true,
       position: "top-right",
       showConfirmButton: false,

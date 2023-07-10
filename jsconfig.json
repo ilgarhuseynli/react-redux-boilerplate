@@ -5,9 +5,9 @@
     "jsx": "react",
     "paths": {
       "@config/*": ["./config/*"],
+      "@lib": ["./library"],
       "@hooks": ["./hooks"],
       "@actions": ["./actions"],
-      "@lib": ["./library"],
       "@stores/*": ["./stores/*"],
       "@components": ["./components"]
     }
