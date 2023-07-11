@@ -34,12 +34,12 @@ export const InputCheckbox = ({
           }
         )}
       >
-        {checked === true && (
-          <i className="feather feather-check font-weight-bold text-white" />
+        {checked && (
+          <i className="uil-check font-weight-bold text-white" />
         )}
       </div>
       {label && (
-        <label className="form-control-label mb-0 ml-2 text-muted">
+        <label className="form-control-label mb-0 ml-2 text-muted ms-1">
           {label}
         </label>
       )}

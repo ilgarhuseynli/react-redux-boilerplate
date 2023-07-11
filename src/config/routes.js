@@ -28,7 +28,7 @@ export const API_ROUTES = {
   permissions: MAIN_API_URL + "/permissions",
   parameters: MAIN_API_URL + "/parameters",
 
-  usersSearch: MAIN_API_URL + "/users/search",
+  usersPasswordEdit: MAIN_API_URL + "/users/password/edit",
   users: MAIN_API_URL + "/users",
 
 

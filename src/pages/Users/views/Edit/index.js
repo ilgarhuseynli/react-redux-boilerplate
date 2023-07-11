@@ -48,11 +48,11 @@ export const Edit = React.memo(({onClose, reload}) => {
 
             if (response) {
                 setState({saveLoading: false});
-                AlertLib.toast({
-                    icon: response.status,
-                    title: response.description,
-                });
                 if (response.status === "success") {
+                    AlertLib.toast({
+                        icon: response.status,
+                        title: response.description,
+                    });
                     await reload();
                     onClose();
                 }

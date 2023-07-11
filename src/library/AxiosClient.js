@@ -32,17 +32,24 @@ const AxiosClient = () => {
     }, async function(error) {
 
         //if error unauthorized
-        if (error.response.status === 401 || error.response.status === 500 ){
-            //logout
-            if (error.response.status === 401)
-                store.dispatch(logout())
+        // if (error.response.status === 401 || error.response.status === 500 ){
+        //
+        // }
 
-            await Swal.fire({
-                title: 'Error',
-                icon: 'error',
-                text: error.response.data.message,
-            })
-        }
+        //logout
+        if (error.response.status === 401)
+            store.dispatch(logout())
+
+        await Swal.fire({
+            title: 'Error',
+            icon: 'error',
+            text: error.response.data.message,
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 2000,
+        })
+
 
         return error.response.data;
         // return Promise.reject(error);
