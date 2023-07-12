@@ -46,17 +46,17 @@ export const InfoTab = React.memo(({state,setParams,setState}) => {
                     />
                 </div>
 
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Role</label>
-                    <Select
-                        isClearable
-                        options={state.roles}
-                        value={state.params.role}
-                        onChange={(role) => setParams({role})}
-                        placeholder='Role'
-                        className='form-control'
-                    />
-                </div>
+                {/*<div className="col-md-6 mb-2">*/}
+                {/*    <label className="form-label">Role</label>*/}
+                {/*    <Select*/}
+                {/*        isClearable*/}
+                {/*        options={state.roles}*/}
+                {/*        value={state.params.role}*/}
+                {/*        onChange={(role) => setParams({role})}*/}
+                {/*        placeholder='Role'*/}
+                {/*        className='form-control'*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 <div className="col-md-6 mb-2">
                     <label className="form-label">Name</label>

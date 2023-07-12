@@ -31,9 +31,6 @@ export const PermissionsTab = React.memo(({state, setState}) => {
         loadData()
     }, []);
 
-
-    console.log(permissionsList)
-
     return (
         <div>
             {state.loading && <Loading/>}

@@ -11,7 +11,7 @@ export const Info = React.memo(() => {
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
         {
-            activeTab: 'permissions',
+            activeTab: 'settings',
             loading: false,
             showPassword: false,
             saveLoading: false,

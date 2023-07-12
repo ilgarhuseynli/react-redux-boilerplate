@@ -32,7 +32,7 @@ export const TableCustom = ({state, setState,loadData}) => {
             sort: "created_at",
             render: (data) => (
                 <span className="text-title fw-800">
-                  {moment(data).format("YYYY-MM-DD HH:mm")}
+                  {moment.unix(data.created_at).format("YYYY-MM-DD HH:mm")}
                 </span>
             ),
         },

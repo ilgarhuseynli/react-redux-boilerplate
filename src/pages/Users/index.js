@@ -5,7 +5,7 @@ import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
 
 
-export default function Users(){
+export default function Users({role}){
     const navigate = useNavigate();
 
     const [state, setState] = React.useReducer(
@@ -17,7 +17,6 @@ export default function Users(){
             skip: 0,
             limit: 10,
             name: "",
-            role: "",
             selectedIDs: [],
             hiddenColumns: [],
             sort: "created_at",
@@ -34,7 +33,7 @@ export default function Users(){
             sort: state.sort || "",
             sort_type: state.sort_type || "",
             username: state?.name || "",
-            role: state.role?.value || "",
+            role: role,
         });
 
 
@@ -85,17 +84,17 @@ export default function Users(){
         state.limit,
         state.sort,
         state.sort_type,
-        state.role,
+        role,
         state.name,
     ]);
-
 
     return(
         <div className="container-fluid">
 
             <ViewRoutes
-                onClose={()=>navigate('/users')}
+                onClose={()=>navigate('')}
                 loadData={loadData}
+                role={role}
             />
 
             <HeaderCustom

@@ -50,6 +50,47 @@ export const MENU_ROUTES = [
         element:<Home />,
       },
 
+
+      {
+        name:'moderator',
+        path:'moderator',
+        children:[
+          {
+            index:true,
+            path:'*',
+            name:'index',
+            auth: true,
+            element:<Users role={1} />,
+          },
+          {
+            path:'edit/:id',
+            name:'edit',
+            auth: true,
+            element: <Info />
+          },
+        ]
+      },
+
+      {
+        name:'employee',
+        path:'employee',
+        children:[
+          {
+            index:true,
+            path:'*',
+            name:'index',
+            auth: true,
+            element:<Users role={2} />,
+          },
+          {
+            path:'edit/:id',
+            name:'edit',
+            auth: true,
+            element: <Info />
+          },
+        ]
+      },
+
       {
         name:'users',
         path:'users',
@@ -59,7 +100,7 @@ export const MENU_ROUTES = [
             path:'*',
             name:'index',
             auth: true,
-            element:<Users />,
+            element:<Users role={3} />,
           },
           {
             path:'edit/:id',

@@ -3,10 +3,9 @@ import {
     Loading, Popup, Spinner,
 } from "@components";
 import {AlertLib} from "@lib";
-import {parameters, userStore} from "@actions";
-import Select from "react-select";
+import {userStore} from "@actions";
 
-export const Add = React.memo(({onClose, reload}) => {
+export const Add = React.memo(({onClose, reload, role}) => {
 
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
@@ -14,11 +13,10 @@ export const Add = React.memo(({onClose, reload}) => {
             loading: false,
             showPassword: false,
             saveLoading: false,
-            roles: [],
             params: {
                 username: '',
                 name: '',
-                role: '',
+                role: role,
                 surname: '',
                 phone: '',
                 address: '',
@@ -39,16 +37,17 @@ export const Add = React.memo(({onClose, reload}) => {
 
             let response = await userStore({
                 ...state.params,
-                role_id:state.params.role?.value,
+                role_id:state.params.role,
             });
 
             if (response) {
                 setState({saveLoading: false});
-                AlertLib.toast({
-                    icon: response.status,
-                    title: response.description,
-                });
                 if (response.status === "success") {
+                    AlertLib.toast({
+                        icon: response.status,
+                        title: response.description,
+                    });
+
                     await reload();
                     onClose();
                 }
@@ -57,16 +56,11 @@ export const Add = React.memo(({onClose, reload}) => {
     };
 
 
-    const loadData = async () => {
-        let response = await parameters({name:'roles'});
-
-        setState({roles: response?.data})
-    };
-
-
-    React.useEffect(() => {
-        loadData()
-    }, []);
+    // const loadData = async () => {
+    //     let response = await parameters({name:'roles'});
+    //
+    //     setState({roles: response?.data})
+    // };
 
 
     const renderModalHeader = () => (
@@ -109,17 +103,17 @@ export const Add = React.memo(({onClose, reload}) => {
                     />
                 </div>
 
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Role</label>
-                    <Select
-                        isClearable
-                        options={state.roles}
-                        value={state.params.role}
-                        onChange={(role) => setParams({role})}
-                        placeholder='Role'
-                        className='form-control'
-                    />
-                </div>
+                {/*<div className="col-md-6 mb-2">*/}
+                {/*    <label className="form-label">Role</label>*/}
+                {/*    <Select*/}
+                {/*        isClearable*/}
+                {/*        options={state.roles}*/}
+                {/*        value={state.params.role}*/}
+                {/*        onChange={(role) => setParams({role})}*/}
+                {/*        placeholder='Role'*/}
+                {/*        className='form-control'*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 <div className="col-md-6 mb-2">
                     <label className="form-label">Name</label>

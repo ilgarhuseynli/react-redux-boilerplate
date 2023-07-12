@@ -2,7 +2,7 @@ import React from "react";
 import {Route,Routes} from "react-router-dom";
 import {Add} from "../views";
 
-export const ViewRoutes = ({onClose,loadData}) => {
+export const ViewRoutes = ({onClose,loadData,role}) => {
 
     return (
         <Routes>
@@ -11,6 +11,7 @@ export const ViewRoutes = ({onClose,loadData}) => {
                 element={<Add
                     reload={() => loadData()}
                     onClose={onClose}
+                    role={role}
                 />}
             />
         </Routes>

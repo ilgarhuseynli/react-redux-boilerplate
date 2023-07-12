@@ -49,8 +49,22 @@ const Sidebar = () => {
                         </li>
 
                         <li className="side-nav-item">
+                            <Link to={url('home.moderator')} className="side-nav-link">
+                                <i className="uil-users-alt text-info"/>
+                                <span> Moderator </span>
+                            </Link>
+                        </li>
+
+                        <li className="side-nav-item">
+                            <Link to={url('home.employee')} className="side-nav-link">
+                                <i className="uil-users-alt text-primary"/>
+                                <span> Employee </span>
+                            </Link>
+                        </li>
+
+                        <li className="side-nav-item">
                             <Link to={url('home.users')} className="side-nav-link">
-                                <i className="uil-users-alt"/>
+                                <i className="uil-users-alt text-secondary"/>
                                 <span> Users </span>
                             </Link>
                         </li>

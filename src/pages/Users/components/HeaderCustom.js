@@ -68,21 +68,21 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     />
                 </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-12 mt-md-0 mt-3 order-md-2 order-3">
-                <div className="input-group">
-                    <span className="input-group-text">Role</span>
+            {/*<div className="col-lg-3 col-md-3 col-12 mt-md-0 mt-3 order-md-2 order-3">*/}
+            {/*    <div className="input-group">*/}
+            {/*        <span className="input-group-text">Role</span>*/}
 
-                    <Select
-                        isClearable
-                        options={roles}
-                        value={state.role}
-                        onChange={role => setState({role})}
-                        placeholder='Role'
-                        className='form-control'
-                    />
+            {/*        <Select*/}
+            {/*            isClearable*/}
+            {/*            options={roles}*/}
+            {/*            value={state.role}*/}
+            {/*            onChange={role => setState({role})}*/}
+            {/*            placeholder='Role'*/}
+            {/*            className='form-control'*/}
+            {/*        />*/}
 
-                </div>
-            </div>
+            {/*    </div>*/}
+            {/*</div>*/}
 
             <div className="col-md-auto col-6 mt-md-0 mt-3 order-md-2 order-4 ms-md-auto">
                 <Table.ColumnFilter
