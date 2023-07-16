@@ -11,7 +11,7 @@ export default function Users({role}){
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
         {
-            loading: false,
+            loading: true,
             data: [],
             count: 0,
             skip: 0,

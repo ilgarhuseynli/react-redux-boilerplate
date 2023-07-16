@@ -8,6 +8,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import {Info} from "../pages/Users/views";
+import {userAvatarUpload} from "@actions";
 
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
@@ -18,7 +19,7 @@ export const API_ROUTES = {
   //common apis
   settings: MAIN_API_URL + "/settings",
   translations: MAIN_API_URL + "/translations",
-
+  mediaUpload: MAIN_API_URL + "/media/store",
 
   authLogin: MAIN_API_URL + "/login",
   authRegister: MAIN_API_URL + "/register",
@@ -30,6 +31,8 @@ export const API_ROUTES = {
 
   usersPasswordEdit: MAIN_API_URL + "/users/password/edit",
   users: MAIN_API_URL + "/users",
+  userAvatarUpload: MAIN_API_URL + "/users/avatarupload",
+  userAvatarDelete: MAIN_API_URL + "/users/avatardelete",
 
 
 };

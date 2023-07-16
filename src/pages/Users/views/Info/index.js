@@ -1,8 +1,9 @@
 import React from "react";
 import {AlertLib} from "@lib";
-import {parameters, userInfo} from "@actions";
+import {parameters, userAvatarUpload, userInfo} from "@actions";
 import {useParams} from "react-router-dom";
 import {InfoTab, PasswordTab, PermissionsTab} from "./components";
+import {InputFile} from "@components";
 
 export const Info = React.memo(() => {
 
@@ -13,6 +14,7 @@ export const Info = React.memo(() => {
         {
             activeTab: 'settings',
             loading: false,
+            file: false,
             showPassword: false,
             saveLoading: false,
             roles: [],
@@ -47,6 +49,7 @@ export const Info = React.memo(() => {
         if (response) {
             if (response.status === "success" && response.data) {
                 setParams({...response.data});
+                setState({file:response.data.avatar})
             } else {
                 AlertLib.toast({
                     icon: "error",
@@ -54,6 +57,24 @@ export const Info = React.memo(() => {
                 });
             }
             setState({loading: false})
+        }
+    };
+
+
+
+    const uploadFile = async (avatar) => {
+        let response = await userAvatarUpload({
+            file: avatar,
+            user_id: state.params.id,
+        });
+
+        setState({file:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
         }
     };
 
@@ -90,46 +111,47 @@ export const Info = React.memo(() => {
                 <div className="col-12">
                     <div className="card text-center">
                         <div className="card-body p-1">
+                            <div className="d-flex align-items-center">
 
-                            <div className="row">
-                                <div className="col-2 d-flex align-items-center justify-content-center">
-                                    <img
-                                        style={{height:'140px'}}
-                                        src="/assets/images/users/avatar-03.png"
-                                        className="rounded-circle img-fluid img-thumbnail"
-                                        alt="profile-image"
+                                <div className="form-group">
+                                    <InputFile
+                                        size={140}
+                                        avatar={state.file}
+                                        uploadFile={uploadFile}
+                                        onChange={(file) => setState({ file })}
+                                        className="mx-3"
                                     />
                                 </div>
-                                <div className="col-10">
-                                    <div className="text-start">
-                                        <h4 className="mb-0 mt-2">{params.name} {params.surname}</h4>
-                                        <p className="text-muted font-14">{params.role.label}</p>
 
-                                        {/*<h4 className="font-13 text-uppercase">Address :</h4>*/}
-                                        {/*<p className="text-muted font-13 mb-3">{params.address}</p>*/}
+                                <div className="text-start me-auto">
+                                    <h4 className="mb-0 mt-2">{params.name} {params.surname}</h4>
+                                    <p className="text-muted font-14">{params.role.label}</p>
 
-                                        <p className="text-muted mb-2 font-13">
-                                            <strong>Full Name :</strong>
-                                            <span className="ms-2">{params.name} {params.surname}</span>
-                                        </p>
+                                    {/*<h4 className="font-13 text-uppercase">Address :</h4>*/}
+                                    {/*<p className="text-muted font-13 mb-3">{params.address}</p>*/}
 
-                                        <p className="text-muted mb-2 font-13">
-                                            <strong>Mobile :</strong>
-                                            <span className="ms-2">{params.phone}</span>
-                                        </p>
+                                    <p className="text-muted mb-2 font-13">
+                                        <strong>Full Name :</strong>
+                                        <span className="ms-2">{params.name} {params.surname}</span>
+                                    </p>
 
-                                        <p className="text-muted mb-2 font-13">
-                                            <strong>Email :</strong>
-                                            <span className="ms-2">{params.email}</span>
-                                        </p>
+                                    <p className="text-muted mb-2 font-13">
+                                        <strong>Mobile :</strong>
+                                        <span className="ms-2">{params.phone}</span>
+                                    </p>
 
-                                        <p className="text-muted mb-2 font-13">
-                                            <strong>Location :</strong>
-                                            <span className="ms-2">{params.address}</span>
-                                        </p>
+                                    <p className="text-muted mb-2 font-13">
+                                        <strong>Email :</strong>
+                                        <span className="ms-2">{params.email}</span>
+                                    </p>
 
-                                    </div>
+                                    <p className="text-muted mb-2 font-13">
+                                        <strong>Location :</strong>
+                                        <span className="ms-2">{params.address}</span>
+                                    </p>
+
                                 </div>
+
                             </div>
 
                         </div>

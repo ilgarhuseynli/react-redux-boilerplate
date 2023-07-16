@@ -29,3 +29,10 @@ export async function userPasswordUpdate(data) {
     return await AxiosClient.put(API_ROUTES.usersPasswordEdit,data).catch(err => err.response)
 }
 
+export async function userAvatarUpload(data) {
+    return await AxiosClient.post(API_ROUTES.userAvatarUpload,data).catch(err => err.response)
+}
+
+export async function userAvatarDelete(data) {
+    return await AxiosClient.delete(API_ROUTES.userAvatarDelete,data).catch(err => err.response)
+}
