@@ -81,7 +81,13 @@ export const Info = React.memo(() => {
 
     React.useEffect(() => {
         loadData()
-    }, []);
+    }, [state.params.id]);
+
+
+    React.useEffect(() => {
+        setState({activeTab:'settings'})
+        setParams({id:urlParams.id})
+    }, [urlParams.id]);
 
 
     const TABS = [
