@@ -8,8 +8,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import {Info} from "../pages/Users/views";
-import {userAvatarUpload} from "@actions";
-
+import Company from "../pages/Company";
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
 export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
@@ -28,11 +27,17 @@ export const API_ROUTES = {
 
   permissions: MAIN_API_URL + "/permissions",
   parameters: MAIN_API_URL + "/parameters",
+  categories: MAIN_API_URL + "/categories",
 
-  usersPasswordEdit: MAIN_API_URL + "/users/password/edit",
+
   users: MAIN_API_URL + "/users",
+  usersPasswordEdit: MAIN_API_URL + "/users/password/edit",
   userAvatarUpload: MAIN_API_URL + "/users/avatarupload",
   userAvatarDelete: MAIN_API_URL + "/users/avatardelete",
+
+  products: MAIN_API_URL + "/products",
+  productFileUpload: MAIN_API_URL + "/products/fileupload",
+  productFileDelete: MAIN_API_URL + "/products/filedelete",
 
 
 };
@@ -53,6 +58,12 @@ export const MENU_ROUTES = [
         element:<Home />,
       },
 
+      {
+        path: "company",
+        name: "company",
+        auth: true,
+        element: <Company />,
+      },
 
       {
         name:'moderator',

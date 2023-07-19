@@ -48,26 +48,55 @@ const Sidebar = () => {
                             </Link>
                         </li>
 
+
+
                         <li className="side-nav-item">
-                            <Link to={url('home.moderator')} className="side-nav-link">
-                                <i className="uil-users-alt text-info"/>
-                                <span> Moderator </span>
+                            <Link to={url('home.company')} className="side-nav-link">
+                                <i className="uil-building"/>
+                                <span> Company </span>
                             </Link>
                         </li>
 
-                        <li className="side-nav-item">
-                            <Link to={url('home.employee')} className="side-nav-link">
-                                <i className="uil-users-alt text-primary"/>
-                                <span> Employee </span>
-                            </Link>
-                        </li>
+                        {/*<li className="side-nav-title side-nav-item">Users</li>*/}
 
                         <li className="side-nav-item">
-                            <Link to={url('home.users')} className="side-nav-link">
-                                <i className="uil-users-alt text-secondary"/>
+                            <a data-bs-toggle="collapse" href="#sidebarUserManagement" aria-expanded="false"
+                               aria-controls="sidebarUserManagement" className="side-nav-link">
+                                <i className="uil-users-alt"/>
                                 <span> Users </span>
-                            </Link>
+                                <span className="menu-arrow"></span>
+                            </a>
+                            <div className="collapse" id="sidebarUserManagement">
+                                <ul className="side-nav-second-level">
+
+                                    <li >
+                                        <Link to={url('home.moderator')}  >
+                                            <i className="uil-users-alt text-info"/>
+                                            <span> Moderator </span>
+                                        </Link>
+                                    </li>
+
+                                    <li >
+                                        <Link to={url('home.employee')}  >
+                                            <i className="uil-users-alt text-primary"/>
+                                            <span> Employee </span>
+                                        </Link>
+                                    </li>
+
+                                    <li >
+                                        <Link to={url('home.users')}  >
+                                            <i className="uil-users-alt text-secondary"/>
+                                            <span> Users </span>
+                                        </Link>
+                                    </li>
+
+
+                                </ul>
+                            </div>
                         </li>
+
+
+
 
 
 
@@ -83,13 +112,13 @@ const Sidebar = () => {
 
 
                         {/*<li className="side-nav-item">*/}
-                        {/*    <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"*/}
-                        {/*       aria-controls="sidebarEcommerce" className="side-nav-link">*/}
+                        {/*    <a data-bs-toggle="collapse" href="#sidebarUserManagement" aria-expanded="false"*/}
+                        {/*       aria-controls="sidebarUserManagement" className="side-nav-link">*/}
                         {/*        <i className="uil-store"/>*/}
                         {/*        <span> Ecommerce </span>*/}
                         {/*        <span className="menu-arrow"></span>*/}
                         {/*    </a>*/}
-                        {/*    <div className="collapse" id="sidebarEcommerce">*/}
+                        {/*    <div className="collapse" id="sidebarUserManagement">*/}
                         {/*        <ul className="side-nav-second-level">*/}
                         {/*            <li>*/}
                         {/*                <a href="#">Products</a>*/}
