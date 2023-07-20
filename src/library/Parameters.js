@@ -16,7 +16,6 @@ export class Parameters {
 
     static getStatusList() {
         return [
-            {value: '', label: 'Status', color: '#fff'},
             {value: '0', label: 'InActive', color: '#ffd600'},
             {value: '1', label: 'Active', color: '#2dce89'},
         ];

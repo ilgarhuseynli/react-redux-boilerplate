@@ -9,6 +9,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import {Info} from "../pages/Users/views";
 import Company from "../pages/Company";
+import Category from "../pages/Category";
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
 export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
@@ -67,6 +68,13 @@ export const MENU_ROUTES = [
         name: "company",
         auth: true,
         element: <Company />,
+      },
+
+      {
+        path: "productcategory/*",
+        name: "productcategory",
+        auth: true,
+        element: <Category type={'product'} />,
       },
 
       {

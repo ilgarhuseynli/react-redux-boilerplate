@@ -408,7 +408,7 @@ Table.ColumnFilter = React.forwardRef(
                 {...props}
             >
                 <button
-                    className="btn btn-light dropdown-toggle"
+                    className="btn btn-light dropdown-toggle w-100"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"

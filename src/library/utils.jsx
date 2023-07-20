@@ -2,6 +2,7 @@ import routes from "../config/routes";
 import {generatePath} from "react-router-dom";
 import {PrivateRoute} from "@components";
 import React from "react";
+import {Lang} from "./Lang";
 
 export const url = (path,params = {}) =>{
     let lastRoute = '';
@@ -74,3 +75,26 @@ export const isEqual = (first_array = [], second_array = []) => {
     }
     return result;
 };
+
+
+export const tableStatusColumn = (status) => {
+
+    return (
+        <div className="d-flex align-items-center">
+            <span
+                style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: status ? "#2ECD89" : "#FDD74D",
+                    borderRadius: "50%",
+                    marginTop: 2,
+                }}
+            />
+            <p
+                className="text-lowercase mb-0 ms-2 fw-400 lh-20 fs-14"
+                style={{whiteSpace: "nowrap"}}>
+                {Lang.get(status ? "Active" : "inActive")}
+            </p>
+        </div>
+    )
+}

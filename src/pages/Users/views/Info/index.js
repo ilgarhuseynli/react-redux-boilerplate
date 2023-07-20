@@ -95,7 +95,7 @@ export const Info = React.memo(() => {
 
     React.useEffect(() => {
         loadData()
-    }, [state.params.id]);
+    }, [urlParams?.id]);
 
 
     React.useEffect(() => {

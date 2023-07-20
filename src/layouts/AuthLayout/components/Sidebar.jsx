@@ -96,6 +96,27 @@ const Sidebar = () => {
                         </li>
 
 
+                        <li className="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarSettingManagements" aria-expanded="false"
+                               aria-controls="sidebarSettingManagements" className="side-nav-link">
+                                <i className="uil-bright"/>
+                                <span> Settings </span>
+                                <span className="menu-arrow"></span>
+                            </a>
+                            <div className="collapse" id="sidebarSettingManagements">
+                                <ul className="side-nav-second-level">
+                                    <li >
+                                        <Link to={url('home.productcategory')}  >
+                                            <i className="uil-bright text-info"/>
+                                            <span> Categories </span>
+                                        </Link>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+
 
 
 
