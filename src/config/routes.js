@@ -16,7 +16,7 @@ export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
 export const API_ROUTES = {
 
   //common apis
-  settings: MAIN_API_URL + "/settings",
+  authsettings: MAIN_API_URL + "/authsettings",
   translations: MAIN_API_URL + "/translations",
   mediaUpload: MAIN_API_URL + "/media/store",
 
@@ -29,6 +29,10 @@ export const API_ROUTES = {
   parameters: MAIN_API_URL + "/parameters",
   categories: MAIN_API_URL + "/categories",
 
+
+  settings: MAIN_API_URL + "/settings",
+  settingFileUpload: MAIN_API_URL + "/settings/fileupload",
+  settingFileDelete: MAIN_API_URL + "/settings/filedelete",
 
   users: MAIN_API_URL + "/users",
   usersPasswordEdit: MAIN_API_URL + "/users/password/edit",

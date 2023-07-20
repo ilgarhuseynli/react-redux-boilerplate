@@ -1,6 +1,6 @@
 import React from "react";
 import {AlertLib} from "@lib";
-import {parameters, userAvatarUpload, userInfo} from "@actions";
+import {parameters, userAvatarDelete, userAvatarUpload, userInfo} from "@actions";
 import {useParams} from "react-router-dom";
 import {InfoTab, PasswordTab, PermissionsTab} from "./components";
 import {InputFile} from "@components";
@@ -79,6 +79,20 @@ export const Info = React.memo(() => {
     };
 
 
+    const deleteFile = async () => {
+        let response = await userAvatarDelete({user_id: state.params.id});
+
+        setState({file:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
+        }
+    };
+
+
     React.useEffect(() => {
         loadData()
     }, [state.params.id]);
@@ -124,7 +138,7 @@ export const Info = React.memo(() => {
                                         size={140}
                                         avatar={state.file}
                                         uploadFile={uploadFile}
-                                        onChange={(file) => setState({ file })}
+                                        deleteFile={deleteFile}
                                         className="mx-3"
                                     />
                                 </div>

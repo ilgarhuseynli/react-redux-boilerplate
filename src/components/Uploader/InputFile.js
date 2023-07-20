@@ -11,7 +11,7 @@ export const InputFile = ({
   disabled,
   className,
   uploadFile,
-  onChange,
+  deleteFile,
 }) => {
   const { getRootProps, getInputProps, open } = useDropzone({
     disabled,
@@ -108,7 +108,7 @@ export const InputFile = ({
               <button
                 type="button"
                 className="uil uil-trash"
-                onClick={() => onChange(null)}
+                onClick={deleteFile}
               />
             </>
           )}

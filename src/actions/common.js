@@ -33,7 +33,7 @@ const getFromAPI = async (key, url, params) => {
 export const settings = async (params) => {
   return await getFromStorage(
       `settings-${config.appID}`,
-      API_ROUTES.settings,
+      API_ROUTES.authsettings,
       2,
       params
   );

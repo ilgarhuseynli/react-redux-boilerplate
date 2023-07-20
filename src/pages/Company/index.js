@@ -1,30 +1,34 @@
-import React, {useState} from "react";
-import {settingList, settingUpdate, userStore} from "@actions";
-import {Loading, Spinner} from "@components";
+import React, {useReducer, useState} from "react";
+import {settingFileDelete, settingFileUpload, settingList, settingUpdate, userAvatarUpload} from "@actions";
+import {InputFile, Loading, Spinner} from "@components";
 import {AlertLib} from "@lib";
 
 export default function Company(){
 
     const [loading,setLoding] = useState(true);
     const [saveLoading,setSaveLoading] = useState(false);
-    const [data,setData] = useState({
-        'logo' : '',
-        'title' : '',
-        'email' : '',
-        'address' : '',
-        'description' : '',
-        'map_location' : '',
-        'short_number' : '',
-        'phone' : '',
-        'opening_hours' : '',
-        'reg_id' : '',
-        'social_wp' : '',
-        'social_fb' : '',
-        'social_telegram' : '',
-        'social_instagram' : '',
-        'social_linkedin' : '',
-        'social_twitter' : '',
-    });
+
+    const [state, setState] = useReducer((prevState, newState) => {
+        return {...prevState, ...newState}
+    }, {
+        logo: {},
+        title: '',
+        email: '',
+        address: '',
+        description: '',
+        map_location: '',
+        short_number: '',
+        phone: '',
+        opening_hours: '',
+        reg_id: '',
+        social_wp: '',
+        social_fb: '',
+        social_telegram: '',
+        social_instagram: '',
+        social_linkedin: '',
+        social_twitter: '',
+    })
+
 
 
     const loadData = async () => {
@@ -33,7 +37,7 @@ export default function Company(){
         if (response) {
             setLoding(false)
             if (response.status === "success") {
-                setData(response.data)
+                setState(response.data)
             }
         }
     };
@@ -42,7 +46,7 @@ export default function Company(){
         setSaveLoading(true)
         if (!saveLoading) {
 
-            let response = await settingUpdate(data);
+            let response = await settingUpdate(state);
 
             if (response) {
                 setSaveLoading(false)
@@ -57,23 +61,66 @@ export default function Company(){
     };
 
 
+    const uploadFile = async (avatar) => {
+        let response = await settingFileUpload({file:avatar});
+
+        setState({logo:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
+        }
+    };
+
+    const deleteFile = async () => {
+        let response = await settingFileDelete({});
+
+        setState({logo:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
+        }
+    };
+
     React.useEffect(() => {
         loadData();
     }, []);
 
     return(
         <div className="container-fluid">
-            <div className="row">
+
+
+            <div className="row mt-3">
                 <div className="col-12">
-                    <div className="page-title-box d-flex justify-content-between">
-                        <h4 className="page-title">Company info</h4>
-                        <div className='d-flex align-items-center'>
-                            <button
-                                className='btn btn-primary px-3'
-                                onClick={onSubmit}
-                            >
-                                {saveLoading ? (<Spinner color="#fff" style={{ width: 30 }} />) : 'Save'}
-                            </button>
+                    <div className="card text-center">
+                        <div className="card-body">
+                            <div className="d-flex align-items-center">
+
+                                <div className="form-group">
+                                    <InputFile
+                                        size={140}
+                                        avatar={state.logo}
+                                        uploadFile={uploadFile}
+                                        deleteFile={deleteFile}
+                                        className="mx-3"
+                                    />
+                                </div>
+
+                                <div className="text-start me-auto">
+                                    <h4 className="font-13 text-uppercase">{state.title}</h4>
+
+                                    <p className="text-muted mb-2 font-13">{state.email}</p>
+                                    <p className="text-muted mb-2 font-13">{state.phone}</p>
+                                    <p className="text-muted mb-2 font-13">{state.address}</p>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,14 +132,15 @@ export default function Company(){
                 <div className="col-12">
                     <div className="card">
                         <div className="card-body row">
+                            <h4 className='header-title mb-3'>Company</h4>
 
                             <div className="col-md-6">
 
                                 <div className="mb-3">
                                     <label className="form-label">Title</label>
                                     <input
-                                        value={data.title}
-                                        onChange={(e)=>setData({...data,title:e.target.value})}
+                                        value={state.title}
+                                        onChange={(e)=>setState({title:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -102,8 +150,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Address</label>
                                     <input
-                                        value={data.address}
-                                        onChange={(e)=>setData({...data,address:e.target.value})}
+                                        value={state.address}
+                                        onChange={(e)=>setState({address:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -113,8 +161,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Email</label>
                                     <input
-                                        value={data.email}
-                                        onChange={(e)=>setData({...data,email:e.target.value})}
+                                        value={state.email}
+                                        onChange={(e)=>setState({email:e.target.value})}
                                         type="email"
                                         className="form-control"
                                     />
@@ -124,8 +172,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Location</label>
                                     <input
-                                        value={data.map_location}
-                                        onChange={(e)=>setData({...data,map_location:e.target.value})}
+                                        value={state.map_location}
+                                        onChange={(e)=>setState({map_location:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -135,13 +183,11 @@ export default function Company(){
                             </div>
 
                             <div className="col-md-6">
-
-
                                 <div className="mb-3">
                                     <label className="form-label">Short number</label>
                                     <input
-                                        value={data.short_number}
-                                        onChange={(e)=>setData({...data,short_number:e.target.value})}
+                                        value={state.short_number}
+                                        onChange={(e)=>setState({short_number:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -150,8 +196,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Phone</label>
                                     <input
-                                        value={data.phone}
-                                        onChange={(e)=>setData({...data,phone:e.target.value})}
+                                        value={state.phone}
+                                        onChange={(e)=>setState({phone:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -161,8 +207,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Opening hours</label>
                                     <input
-                                        value={data.opening_hours}
-                                        onChange={(e)=>setData({...data,opening_hours:e.target.value})}
+                                        value={state.opening_hours}
+                                        onChange={(e)=>setState({opening_hours:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -171,8 +217,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Reg Id</label>
                                     <input
-                                        value={data.reg_id}
-                                        onChange={(e)=>setData({...data,reg_id:e.target.value})}
+                                        value={state.reg_id}
+                                        onChange={(e)=>setState({reg_id:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -184,8 +230,8 @@ export default function Company(){
                             <div className="mb-3 col-12">
                                 <label className="form-label">description</label>
                                 <textarea
-                                    value={data.description}
-                                    onChange={(e)=>setData({...data,description:e.target.value})}
+                                    value={state.description}
+                                    onChange={(e)=>setState({description:e.target.value})}
                                     className="form-control"
                                 ></textarea>
                             </div>
@@ -197,7 +243,7 @@ export default function Company(){
 
                     <div className="card">
                         <div className="card-body row">
-                            <h4 className='header-title'>Social</h4>
+                            <h4 className='header-title mb-3'>Social</h4>
 
 
                             <div className="col-md-6">
@@ -205,8 +251,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">WhatsApp</label>
                                     <input
-                                        value={data.social_wp}
-                                        onChange={(e)=>setData({...data,social_wp:e.target.value})}
+                                        value={state.social_wp}
+                                        onChange={(e)=>setState({social_wp:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -215,8 +261,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Facebook</label>
                                     <input
-                                        value={data.social_fb}
-                                        onChange={(e)=>setData({...data,social_fb:e.target.value})}
+                                        value={state.social_fb}
+                                        onChange={(e)=>setState({social_fb:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -225,8 +271,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Telegram</label>
                                     <input
-                                        value={data.social_telegram}
-                                        onChange={(e)=>setData({...data,social_telegram:e.target.value})}
+                                        value={state.social_telegram}
+                                        onChange={(e)=>setState({social_telegram:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -240,8 +286,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Instagram</label>
                                     <input
-                                        value={data.social_instagram}
-                                        onChange={(e)=>setData({...data,social_instagram:e.target.value})}
+                                        value={state.social_instagram}
+                                        onChange={(e)=>setState({social_instagram:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -250,8 +296,8 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Linkedin</label>
                                     <input
-                                        value={data.social_linkedin}
-                                        onChange={(e)=>setData({...data,social_linkedin:e.target.value})}
+                                        value={state.social_linkedin}
+                                        onChange={(e)=>setState({social_linkedin:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
@@ -260,19 +306,26 @@ export default function Company(){
                                 <div className="mb-3">
                                     <label className="form-label">Twitter</label>
                                     <input
-                                        value={data.social_twitter}
-                                        onChange={(e)=>setData({...data,social_twitter:e.target.value})}
+                                        value={state.social_twitter}
+                                        onChange={(e)=>setState({social_twitter:e.target.value})}
                                         type="text"
                                         className="form-control"
                                     />
                                 </div>
-
-
                             </div>
-
-
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-12">
+                    <button
+                        className='btn btn-primary px-4'
+                        onClick={onSubmit}
+                    >
+                        {saveLoading ? (<Spinner color="#fff" style={{ width: 30 }} />) : 'Save'}
+                    </button>
                 </div>
             </div>
         </div>
