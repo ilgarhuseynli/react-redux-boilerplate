@@ -21,6 +21,14 @@ export class Parameters {
         ];
     }
 
+    static productPositions() {
+        return [
+            {value: 1, label: 'Left', color: '#ffd600'},
+            {value: 2, label: 'Center', color: '#2dce89'},
+            {value: 3, label: 'Right', color: '#2dce89'},
+        ];
+    }
+
     static getRoleList() {
         return [
             {value: '', label: 'All', color: '#fff'},

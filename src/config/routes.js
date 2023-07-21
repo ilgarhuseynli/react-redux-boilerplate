@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import {Info} from "../pages/Users/views";
 import Company from "../pages/Company";
 import Category from "../pages/Category";
+import Product from "../pages/Product";
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
 export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
@@ -28,6 +29,7 @@ export const API_ROUTES = {
 
   permissions: MAIN_API_URL + "/permissions",
   parameters: MAIN_API_URL + "/parameters",
+  multiList: MAIN_API_URL + "/multilist",
   categories: MAIN_API_URL + "/categories",
 
 
@@ -75,6 +77,13 @@ export const MENU_ROUTES = [
         name: "productcategory",
         auth: true,
         element: <Category type={'product'} />,
+      },
+
+      {
+        name: "products",
+        path: "products/*",
+        auth: true,
+        element: <Product />,
       },
 
       {

@@ -53,3 +53,7 @@ export const translations = async (params) => {
 export async function parameters(data) {
   return await AxiosClient.get(API_ROUTES.parameters, {params:data}).catch(err => err.response)
 }
+
+export async function multiList(data) {
+  return await AxiosClient.get(API_ROUTES.multiList, {params:data}).catch(err => err.response)
+}
