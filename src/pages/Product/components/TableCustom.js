@@ -15,22 +15,25 @@ export const TableCustom = ({state, setState,loadData}) => {
             ),
         },
         {
+            key: 'category',
             name: Lang.get("Category"),
-            render: (data) => (<span>{data.category.label}</span>),
+            render: (data) => (<span>{data ? data.label : '-'}</span>),
         },
         {
             sort: "price",
             name: Lang.get("Price"),
-            render: (data) => (<span>{data.price} AZN</span>),
+            render: (data) => (<span>{data.price ? data.price : '-'} {data.price && 'AZN'}</span>),
         },
         {
             sort: "sku",
             key: 'sku',
             name: Lang.get("Sku"),
+            render: (data) => (<span>{data ? data : '-'}</span>),
         },
         {
+            key: 'position',
             name: Lang.get("Position"),
-            render: (data) => (renderPositions(data.position)),
+            render: (data) => (<span>{data ? data.label : '-'}</span>),
         },
         {
             sort: "status",
@@ -49,18 +52,6 @@ export const TableCustom = ({state, setState,loadData}) => {
         },
     ];
 
-
-    const renderPositions = (key) =>{
-        let label;
-        switch (key){
-            case 1: label = 'left'; break;
-            case 2: label = 'center'; break;
-            case 3: label = 'right'; break;
-            default: label = 'Not selected';
-        }
-
-        return (<span>{label}</span>)
-    }
 
     const onSelect = (id) => {
         if (state.selectedIDs.includes(id)) {

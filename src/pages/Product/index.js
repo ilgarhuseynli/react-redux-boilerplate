@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {categoryDelete, categoryList, productDelete, productList} from "@actions";
+import {multiList, productDelete, productList} from "@actions";
 import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
 
@@ -12,12 +12,19 @@ export default function Product(){
         (prevState, newState) => ({...prevState, ...newState}),
         {
             loading: true,
+            product_categories: [],
+            product_positions: [],
             data: [],
             count: 0,
             skip: 0,
             limit: 10,
-            title: "",
-            status: "",
+            filters: {
+                title: "",
+                status: "",
+                sku: "",
+                category: "",
+                position: "",
+            },
             selectedIDs: [],
             hiddenColumns: [],
             sort: "created_at",
@@ -33,8 +40,12 @@ export default function Product(){
             limit: state.limit || "",
             sort: state.sort || "",
             sort_type: state.sort_type || "",
-            title: state?.title,
-            status: state?.status?.value,
+
+            sku: state.filters.sku || "",
+            title: state.filters.title || "",
+            position: state.filters.position?.value || "",
+            category: state.filters.category?.value || "",
+            status: state.filters.status?.value || "",
         });
 
 
@@ -79,14 +90,25 @@ export default function Product(){
     }
 
 
+    const loadLists = async () => {
+        let responseList = await multiList({keys:['product_categories','product_positions']});
+        if (responseList?.status === "success"){
+            setState({ ...responseList.data})
+        }
+    }
+
+    useEffect(()=>{
+        loadLists();
+    },[])
+
+
     React.useEffect(() => {
         loadData();
     }, [
-        state.limit,
+        state.filters,
         state.sort,
+        state.limit,
         state.sort_type,
-        state.title,
-        state.status,
     ]);
 
     return(

@@ -1,10 +1,7 @@
 import React, {useEffect} from "react";
-import {
-    InputCheckbox,
-    Loading, Popup, Spinner,
-} from "@components";
-import {AlertLib, Lang, Parameters} from "@lib";
-import {productStore,multiList} from "@actions";
+import { InputCheckbox,  Popup, Spinner,} from "@components";
+import {AlertLib, Lang} from "@lib";
+import {productStore, multiList, loadMinList} from "@actions";
 import AsyncSelect from "react-select/async";
 import Select from "react-select";
 
@@ -16,7 +13,8 @@ export const Add = React.memo(({onClose, reload}) => {
             loading: true,
             showPassword: false,
             saveLoading: false,
-            categories: [],
+            product_categories: [],
+            product_positions: [],
             params: {
                 title : '',
                 slug : '',
@@ -25,7 +23,7 @@ export const Add = React.memo(({onClose, reload}) => {
                 category : '',
                 position : 0,
                 status : 1,
-                price : 0,
+                price : '',
             }
         }
     );
@@ -59,17 +57,13 @@ export const Add = React.memo(({onClose, reload}) => {
         }
     };
 
-    const loadMinList = async (title, key) => {
-        let response = await multiList({filters: {query: title}, key});
-        if (response?.status === "success") {
-            return response.data;
-        }
-    };
-
     const loadData = async () => {
-        let response = await multiList({key:'product_categories'});
+        let response = await multiList({keys:['product_categories','product_positions']});
         if (response?.status === "success"){
-            setState({ loading:false, categories:response.data})
+            setState({
+                loading:false,
+                ...response.data,
+            })
         }
     }
 
@@ -145,7 +139,7 @@ export const Add = React.memo(({onClose, reload}) => {
                         isClearable
                         cacheOptions
                         loadOptions={(title) => loadMinList(title, 'product_categories')}
-                        defaultOptions={state.categories}
+                        defaultOptions={state.product_categories}
                         value={state.params.category}
                         onChange={(category) => setParams({category})}
                         placeholder='Category'
@@ -159,7 +153,7 @@ export const Add = React.memo(({onClose, reload}) => {
                     <label className="form-label">Position</label>
                     <Select
                         isClearable
-                        options={Parameters.productPositions()}
+                        options={state.product_positions}
                         value={state.params.position}
                         onChange={(position) => setParams({position})}
                         placeholder='Position'

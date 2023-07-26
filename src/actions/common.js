@@ -57,3 +57,10 @@ export async function parameters(data) {
 export async function multiList(data) {
   return await AxiosClient.get(API_ROUTES.multiList, {params:data}).catch(err => err.response)
 }
+
+export async function loadMinList(title, key) {
+  let response = await multiList({filters: {query: title}, key});
+  if (response?.status === "success") {
+    return response.data;
+  }
+}

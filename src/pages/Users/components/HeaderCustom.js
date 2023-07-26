@@ -1,14 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
-import {Parameters} from "@lib";
 import {InputLazy} from "@components";
 import {Table} from "@components";
-import {parameters} from "@actions";
-import Select from "react-select";
 
 export const HeaderCustom = ({state, setState, reload, onDelete}) => {
-
-    const [roles,setRoles] = useState([]);
 
     const columns = [
         {name: "Username"},
@@ -16,17 +11,6 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
         {name: "Email"},
         {name: "CreatedAt"},
     ];
-
-    const loadData = async () => {
-        let response = await parameters({name:'roles'});
-
-        setRoles(response?.data)
-    };
-
-    React.useEffect(() => {
-        loadData()
-    }, []);
-
 
     return (
         <div className="row my-3">

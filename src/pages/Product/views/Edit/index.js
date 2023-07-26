@@ -1,10 +1,9 @@
-import React from "react";
-import {
-    InputCheckbox,
-    Loading, Popup, Spinner,
-} from "@components";
+import React, {useEffect} from "react";
+import {InputCheckbox, Loading, Popup, Spinner,} from "@components";
 import {AlertLib, Lang} from "@lib";
-import {categoryInfo, categoryUpdate} from "@actions";
+import {loadMinList, multiList, productInfo, productUpdate} from "@actions";
+import AsyncSelect from "react-select/async";
+import Select from "react-select";
 import {useParams} from "react-router-dom";
 
 export const Edit = React.memo(({onClose, reload}) => {
@@ -14,14 +13,22 @@ export const Edit = React.memo(({onClose, reload}) => {
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
         {
-            loading: false,
+            loadingMinList: true,
+            loading: true,
             showPassword: false,
             saveLoading: false,
-            roles: [],
+            product_categories: [],
+            product_positions: [],
             params: {
                 id: urlParams?.id,
-                title: '',
-                status: 1,
+                title : '',
+                slug : '',
+                sku : '',
+                description : '',
+                category : '',
+                position : 0,
+                status : 1,
+                price : '',
             }
         }
     );
@@ -34,7 +41,11 @@ export const Edit = React.memo(({onClose, reload}) => {
         setState({saveLoading: true});
         if (!state.saveLoading) {
 
-            let response = await categoryUpdate(state.params);
+            let response = await productUpdate({
+                ...state.params,
+                position:state.params.position?.value,
+                category_id:state.params.category?.value,
+            });
 
             if (response) {
                 setState({saveLoading: false});
@@ -43,6 +54,7 @@ export const Edit = React.memo(({onClose, reload}) => {
                         icon: response.status,
                         title: response.description,
                     });
+
                     await reload();
                     onClose();
                 }
@@ -50,25 +62,29 @@ export const Edit = React.memo(({onClose, reload}) => {
         }
     };
 
-
     const loadData = async () => {
-        setState({loading: true})
 
-        let response = await categoryInfo({id: state.params.id});
+        let responseInfo = await productInfo({id: state.params.id});
 
-        if (response) {
-            if (response.status === "success" && response.data) {
-                setParams(response.data);
+        if (responseInfo) {
+            if (responseInfo.status === "success") {
+                setParams(responseInfo.data);
+                setState({loading: false})
             }
-            setState({loading: false})
         }
-    };
 
+        let responseList = await multiList({keys:['product_categories','product_positions']});
+        if (responseList?.status === "success"){
+            setState({
+                loadingMinList:false,
+                ...responseList.data,
+            })
+        }
+    }
 
-    React.useEffect(() => {
-        loadData()
-
-    }, []);
+    useEffect(()=>{
+        loadData();
+    },[])
 
 
     const renderModalHeader = () => (
@@ -84,7 +100,7 @@ export const Edit = React.memo(({onClose, reload}) => {
             <h5 className="title fs-16">Edit</h5>
             <div>
                 <button onClick={onSubmit} className="btn btn-primary px-4">
-                    {state.saveLoading ? (<Spinner color="#fff" style={{ width: 30 }} />) : 'Edit'}
+                    {state.saveLoading ? (<Spinner color="#fff" style={{ width: 30 }} />) : 'Save'}
                 </button>
             </div>
         </div>
@@ -93,30 +109,98 @@ export const Edit = React.memo(({onClose, reload}) => {
     return (
         <Popup
             show={true}
-            size="md"
+            size="lg"
             onClose={onClose}
             header={renderModalHeader()}
         >
-            {state.loading && <Loading/>}
+            <div className="row">
 
-            <div className="col-12 mb-2">
-                <label className="form-label">Title</label>
-                <input
-                    value={state.params.title}
-                    onChange={(e) => setParams({title: e.target.value})}
-                    placeholder='Title'
-                    className="form-control"
-                />
+                {state.loading && <Loading />}
+
+                <div className="col-md-6 mb-2">
+                    <label className="form-label">Title</label>
+                    <input
+                        value={state.params.title}
+                        onChange={(e) => setParams({title: e.target.value})}
+                        placeholder='Title'
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="col-md-6 mb-2">
+                    <label className="form-label">Sku</label>
+                    <input
+                        value={state.params.sku}
+                        onChange={(e) => setParams({sku: e.target.value})}
+                        placeholder='sku'
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="col-md-6 mb-2">
+                    <label className="form-label">Price</label>
+                    <input
+                        type='number'
+                        step='2'
+                        min='0'
+                        value={state.params.price}
+                        onChange={(e) => setParams({price: e.target.value})}
+                        placeholder='Price'
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="col-md-6 mb-2">
+                    <label className="form-label">Category</label>
+                    <AsyncSelect
+                        isClearable
+                        cacheOptions
+                        loadOptions={(title) => loadMinList(title, 'product_categories')}
+                        defaultOptions={state.product_categories}
+                        value={state.params.category}
+                        onChange={(category) => setParams({category})}
+                        placeholder='Category'
+                        className='form-control'
+                        isLoading={state.loadingMinList}
+                    />
+                </div>
+
+
+                <div className="col-md-6 mb-2">
+                    <label className="form-label">Position</label>
+                    <Select
+                        isClearable
+                        options={state.product_positions}
+                        value={state.params.position}
+                        onChange={(position) => setParams({position})}
+                        placeholder='Position'
+                        className='form-control'
+                        isLoading={state.loadingMinList}
+                    />
+                </div>
+
+
+                <div className="col-12 mb-2">
+                    <label className="form-label">Description</label>
+                    <textarea
+                        value={state.params.description}
+                        onChange={(e) => setParams({description: e.target.value})}
+                        placeholder='Description'
+                        className="form-control"
+                    />
+                </div>
+
+                <div className="col-12">
+                    <InputCheckbox
+                        theme="primary"
+                        label={state.params.status === 1 ? Lang.get("Active") : Lang.get("InActive")}
+                        checked={!!state.params.status}
+                        onChange={(e) => setParams({status: e ? 1 : 0})}
+                        className='d-inline mt-2 float-end'
+                    />
+                </div>
+
             </div>
-
-            <InputCheckbox
-                theme="primary"
-                label={state.params.status === 1 ? Lang.get("Active") : Lang.get("InActive")}
-                checked={!!state.params.status}
-                onChange={(e) => setParams({status: e ? 1 : 0,})}
-                className='d-inline mr-3 mt-3'
-            />
-
         </Popup>
     );
 });

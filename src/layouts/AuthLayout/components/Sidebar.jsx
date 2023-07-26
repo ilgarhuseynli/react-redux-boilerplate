@@ -38,7 +38,7 @@ const Sidebar = () => {
 
                     <ul className="side-nav">
 
-                        <li className="side-nav-title side-nav-item">Navigation</li>
+                        {/*<li className="side-nav-title side-nav-item">Navigation</li>*/}
 
                         <li className="side-nav-item">
                             <Link to={url('home')} className="side-nav-link">

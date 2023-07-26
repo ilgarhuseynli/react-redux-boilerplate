@@ -1,6 +1,6 @@
 import React from "react";
 import {AlertLib} from "@lib";
-import {parameters, userAvatarDelete, userAvatarUpload, userInfo} from "@actions";
+import {userAvatarDelete, userAvatarUpload, userInfo} from "@actions";
 import {useParams} from "react-router-dom";
 import {InfoTab, PasswordTab, PermissionsTab} from "./components";
 import {InputFile} from "@components";
@@ -17,7 +17,6 @@ export const Info = React.memo(() => {
             file: false,
             showPassword: false,
             saveLoading: false,
-            roles: [],
             params: {
                 id: urlParams?.id,
                 username: '',
@@ -39,10 +38,6 @@ export const Info = React.memo(() => {
 
     const loadData = async () => {
         setState({loading: true})
-
-        let roleData = await parameters({name:'roles'});
-
-        setState({roles: roleData?.data})
 
         let response = await userInfo({id: state.params.id});
 
