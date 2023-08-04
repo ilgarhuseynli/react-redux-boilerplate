@@ -55,7 +55,7 @@ export const InputFile = ({
       setState({ loading: false, percent: 0 });
       if (response.status === "success") {
 
-        uploadFile(response.data.name)
+        uploadFile(response.data)
 
       } else {
         setState({ url: null });
@@ -80,7 +80,7 @@ export const InputFile = ({
     >
       <img
         alt="preview"
-        src={state?.url || "/assets/images/users/avatar-03.png"}
+        src={state?.url || "/assets/images/noimg-item.png"}
         className="w-100 h-100"
       />
       {state.loading && (

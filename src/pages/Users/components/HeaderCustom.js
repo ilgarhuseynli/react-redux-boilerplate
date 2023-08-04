@@ -7,7 +7,7 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
     const columns = [
         {name: "Username"},
-        {name: "Role"},
+        // {name: "Role"},
         {name: "Email"},
         {name: "CreatedAt"},
     ];

@@ -11,7 +11,31 @@ export const TableCustom = ({state, setState,loadData}) => {
             sort: "title",
             name: Lang.get("Title"),
             render: (data) => (
-                <Link to={`edit/${data?.id}`}>{data?.title}</Link>
+                <div>
+                    <div className="d-flex align-items-center">
+                        <img
+                            alt='avatar'
+                            src={data.image?.thumb}
+                            className="table__avatar"
+                            style={{width: "35px", height: "35px"}}
+                        />
+                        <div className="table__content">
+                            <Link to={`edit/${data?.id}`}>{data?.title}</Link>
+                            <p
+                                className="text-muted fs-14 mb-0 lh-16"
+                                style={{
+                                    textOverflow: "ellipsis",
+                                    overflow: "hidden",
+                                    whiteSpace: "nowrap",
+                                    width: 190,
+                                    height: 17,
+                                }}>
+                                {data?.description}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
             ),
         },
         {

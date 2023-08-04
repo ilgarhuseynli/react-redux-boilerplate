@@ -62,7 +62,7 @@ export default function Company(){
 
 
     const uploadFile = async (avatar) => {
-        let response = await settingFileUpload({file:avatar});
+        let response = await settingFileUpload({file:avatar.name});
 
         setState({logo:response.data})
 

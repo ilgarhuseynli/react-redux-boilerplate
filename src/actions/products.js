@@ -27,5 +27,5 @@ export async function productFileUpload(data) {
 }
 
 export async function productFileDelete(data) {
-    return await AxiosClient.delete(API_ROUTES.productFileDelete,data).catch(err => err.response)
+    return await AxiosClient.delete(API_ROUTES.productFileDelete,{params:data}).catch(err => err.response)
 }

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
-import {InputCheckbox, Loading, Popup, Spinner,} from "@components";
+import {InputCheckbox, InputFile, Loading, Popup, Spinner,} from "@components";
 import {AlertLib, Lang} from "@lib";
-import {loadMinList, multiList, productInfo, productUpdate} from "@actions";
+import {loadMinList, multiList, productInfo, productUpdate, productFileUpload, productFileDelete} from "@actions";
 import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import {useParams} from "react-router-dom";
@@ -15,6 +15,7 @@ export const Edit = React.memo(({onClose, reload}) => {
         {
             loadingMinList: true,
             loading: true,
+            file: true,
             showPassword: false,
             saveLoading: false,
             product_categories: [],
@@ -69,7 +70,10 @@ export const Edit = React.memo(({onClose, reload}) => {
         if (responseInfo) {
             if (responseInfo.status === "success") {
                 setParams(responseInfo.data);
-                setState({loading: false})
+                setState({
+                    file:responseInfo.data.image,
+                    loading: false,
+                })
             }
         }
 
@@ -81,6 +85,34 @@ export const Edit = React.memo(({onClose, reload}) => {
             })
         }
     }
+
+
+    const uploadFile = async (avatar) => {
+        let response = await productFileUpload({file:avatar.name,product:state.params.id});
+
+        setState({file:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
+        }
+    };
+
+    const deleteFile = async () => {
+        let response = await productFileDelete({product:state.params.id});
+
+        setState({file:response.data})
+
+        if (response?.status === "success"){
+            AlertLib.toast({
+                icon: response?.status,
+                title: response?.description,
+            });
+        }
+    };
+
 
     useEffect(()=>{
         loadData();
@@ -116,6 +148,16 @@ export const Edit = React.memo(({onClose, reload}) => {
             <div className="row">
 
                 {state.loading && <Loading />}
+
+                <div className="col-md-6 d-flex justify-content-center mb-2">
+                    <InputFile
+                        size={140}
+                        avatar={state.file}
+                        uploadFile={uploadFile}
+                        deleteFile={deleteFile}
+                        className="mx-3"
+                    />
+                </div>
 
                 <div className="col-md-6 mb-2">
                     <label className="form-label">Title</label>

@@ -59,7 +59,7 @@ export const Info = React.memo(() => {
 
     const uploadFile = async (avatar) => {
         let response = await userAvatarUpload({
-            file: avatar,
+            file: avatar.name,
             user_id: state.params.id,
         });
 

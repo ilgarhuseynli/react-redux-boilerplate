@@ -34,5 +34,5 @@ export async function userAvatarUpload(data) {
 }
 
 export async function userAvatarDelete(data) {
-    return await AxiosClient.delete(API_ROUTES.userAvatarDelete,data).catch(err => err.response)
+    return await AxiosClient.delete(API_ROUTES.userAvatarDelete,{params:data}).catch(err => err.response)
 }

@@ -14,12 +14,12 @@ export const TableCustom = ({state, setState,loadData}) => {
                 <Link to={`edit/${data?.id}`}>{data?.username}</Link>
             ),
         },
-        {
-            name: Lang.get("Role"),
-            render: (data) => (
-                <>{data.role.label}</>
-            ),
-        },
+        // {
+        //     name: Lang.get("Role"),
+        //     render: (data) => (
+        //         <>{data.role.label}</>
+        //     ),
+        // },
         {
             sort: 'email',
             name: Lang.get("Email"),

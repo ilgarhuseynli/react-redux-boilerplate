@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { InputCheckbox,  Popup, Spinner,} from "@components";
+import {InputCheckbox, InputFile, Popup, Spinner,} from "@components";
 import {AlertLib, Lang} from "@lib";
 import {productStore, multiList, loadMinList} from "@actions";
 import AsyncSelect from "react-select/async";
@@ -16,6 +16,7 @@ export const Add = React.memo(({onClose, reload}) => {
             product_categories: [],
             product_positions: [],
             params: {
+                file : '',
                 title : '',
                 slug : '',
                 sku : '',
@@ -99,6 +100,15 @@ export const Add = React.memo(({onClose, reload}) => {
             header={renderModalHeader()}
         >
             <div className="row">
+
+                <div className="col-md-6 d-flex justify-content-center mb-2">
+                    <InputFile
+                        size={140}
+                        uploadFile={(avatar) => setParams({file:avatar.name})}
+                        deleteFile={() => setParams({file:{}})}
+                        className="mx-3"
+                    />
+                </div>
 
                 <div className="col-md-6 mb-2">
                     <label className="form-label">Title</label>
