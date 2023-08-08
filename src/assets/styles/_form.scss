@@ -62,6 +62,20 @@
 
 
 
+.form-control.ant-picker{
+
+  .ant-picker-input input {
+    color: var(--bs-dark);
+  }
+  .ant-picker-range-separator svg,
+  .ant-picker-suffix,
+  .ant-picker-input input::placeholder{
+    color: var(--bs-gray);
+  }
+}
+
+
+
 body[data-leftbar-theme=dark]{
 
   .form-control div[class*=singleValue] {
@@ -79,6 +93,7 @@ body[data-leftbar-theme=dark]{
     background: var(--bs-light);
     color: var(--bs-gray);
   }
+
 }
 
 

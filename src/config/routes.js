@@ -11,6 +11,7 @@ import {Info} from "../pages/Users/views";
 import Company from "../pages/Company";
 import Category from "../pages/Category";
 import Product from "../pages/Product";
+import Order from "../pages/Order";
 
 export const MAIN_API_URL = "http://127.0.0.1:8000/api/v1";
 export const CSRF_TOKEN_URL = "http://127.0.0.1:8000/sanctum/csrf-cookie";
@@ -41,6 +42,8 @@ export const API_ROUTES = {
   usersPasswordEdit: MAIN_API_URL + "/users/password/edit",
   userAvatarUpload: MAIN_API_URL + "/users/avatarupload",
   userAvatarDelete: MAIN_API_URL + "/users/avatardelete",
+
+  orders: MAIN_API_URL + "/orders",
 
   products: MAIN_API_URL + "/products",
   productFileUpload: MAIN_API_URL + "/products/fileupload",
@@ -85,6 +88,15 @@ export const MENU_ROUTES = [
         auth: true,
         element: <Product />,
       },
+
+
+      {
+        name: "orders",
+        path: "orders/*",
+        auth: true,
+        element: <Order />,
+      },
+
 
       {
         name:'moderator',

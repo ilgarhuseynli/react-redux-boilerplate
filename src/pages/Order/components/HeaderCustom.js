@@ -14,14 +14,19 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
     const { RangePicker } = DatePicker;
 
     const columns = [
-        {name: "Title"},
-        {name: "Category"},
-        {name: "Price"},
-        {name: "Sku"},
-        {name: "Position"},
+        {name: "Ticket number"},
+        {name: "Address"},
+        {name: "Customer"},
+        {name: "Total"},
+        {name: "Discount"},
+        {name: "Creator"},
+        {name: "Payment type"},
         {name: "Status"},
+        {name: "OrderDate"},
+        {name: "CompletedAt"},
         {name: "CreatedAt"},
     ];
+
 
     const setFilters = (data) =>{
         setState({filters:{...state.filters,...data}})
@@ -58,11 +63,11 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     <div className="input-group">
                         <span className="input-group-text"><i className='mdi mdi-magnify' /></span>
                         <InputLazy
-                            defaultValue={state.filters.title}
+                            defaultValue={state.filters.ticket}
                             onChange={() => {}}
-                            action={(title) => setFilters({title})}
+                            action={(ticket) => setFilters({ticket})}
                             className="form-control"
-                            placeholder={"Title"}
+                            placeholder={"Ticket N"}
                         />
                     </div>
                 </div>
@@ -105,7 +110,7 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                         <span className="input-group-text">Status</span>
                         <Select
                             isClearable
-                            options={Parameters.getStatusList()}
+                            options={state.order_statuses}
                             value={state.filters.status}
                             onChange={status => setFilters({status})}
                             placeholder='All'
@@ -116,43 +121,14 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
                 <div className="col-md-3 mt-3">
                     <div className="input-group">
-                        <span className="input-group-text">Category</span>
-                        <AsyncSelect
-                            isClearable
-                            cacheOptions
-                            loadOptions={(title) => loadMinList(title, 'product_categories')}
-                            defaultOptions={state.product_categories}
-                            value={state.filters.category}
-                            onChange={(category) => setFilters({category})}
-                            placeholder='All'
-                            className='form-control'
-                        />
-                    </div>
-                </div>
-
-                <div className="col-md-3 mt-3">
-                    <div className="input-group">
-                        <span className="input-group-text">Position</span>
+                        <span className="input-group-text">Payment Type</span>
                         <Select
                             isClearable
-                            options={state.product_positions}
-                            value={state.filters.position}
-                            onChange={(position) => setFilters({position})}
+                            options={state.payment_types}
+                            value={state.filters.payment_type}
+                            onChange={(payment_type) => setFilters({payment_type})}
                             placeholder='All'
                             className='form-control'
-                        />
-                    </div>
-                </div>
-
-                <div className="col-md-3 mt-3">
-                    <div className="input-group">
-                        <span className="input-group-text">Sku</span>
-                        <InputLazy
-                            defaultValue={state.filters.sku}
-                            onChange={() => {}}
-                            action={(sku) => setFilters({sku})}
-                            className="form-control"
-                            placeholder={"Sku"}
                         />
                     </div>
                 </div>
