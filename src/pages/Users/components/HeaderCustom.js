@@ -6,7 +6,8 @@ import {Table} from "@components";
 export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
     const columns = [
-        {name: "Username"},
+        {name: "Name"},
+        {name: "Phone"},
         // {name: "Role"},
         {name: "Email"},
         {name: "CreatedAt"},
@@ -46,9 +47,9 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     <InputLazy
                         defaultValue={state.name}
                         onChange={() => { }}
-                        action={(name) => setState({name})}
+                        action={(keyword) => setState({keyword})}
                         className="form-control"
-                        placeholder={"Username"}
+                        placeholder={"Keyword"}
                     />
                 </div>
             </div>

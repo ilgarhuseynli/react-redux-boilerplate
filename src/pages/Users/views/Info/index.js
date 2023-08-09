@@ -24,7 +24,7 @@ export const Info = React.memo(() => {
                 role: '',
                 surname: '',
                 phone: '',
-                address: '',
+                address_list: [],
                 email: '',
                 password: '',
                 password_confirmation: '',

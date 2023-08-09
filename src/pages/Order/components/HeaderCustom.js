@@ -16,6 +16,7 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
     const columns = [
         {name: "Ticket number"},
         {name: "Address"},
+        {name: "Phone"},
         {name: "Customer"},
         {name: "Total"},
         {name: "Discount"},
@@ -59,7 +60,7 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     </div>
                 )}
 
-                <div className="col-lg-5 col-md-3 col-12 mt-md-0 mt-3 order-md-2 order-3">
+                <div className="col-lg-4 col-md-6 col-12 mt-md-0 mt-3 order-md-2 order-3">
                     <div className="input-group">
                         <span className="input-group-text"><i className='mdi mdi-magnify' /></span>
                         <InputLazy
@@ -68,6 +69,20 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                             action={(ticket) => setFilters({ticket})}
                             className="form-control"
                             placeholder={"Ticket N"}
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-4 col-12 mt-md-0 mt-3 order-md-2 order-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Status</span>
+                        <Select
+                            isClearable
+                            options={state.order_statuses}
+                            value={state.filters.status}
+                            onChange={status => setFilters({status})}
+                            placeholder='All'
+                            className='form-control'
                         />
                     </div>
                 </div>
@@ -105,21 +120,8 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
             </div>
 
             <div className="row collapse" id="collapseProductFilter" >
-                <div className="col-md-3 mt-3">
-                    <div className="input-group">
-                        <span className="input-group-text">Status</span>
-                        <Select
-                            isClearable
-                            options={state.order_statuses}
-                            value={state.filters.status}
-                            onChange={status => setFilters({status})}
-                            placeholder='All'
-                            className='form-control'
-                        />
-                    </div>
-                </div>
 
-                <div className="col-md-3 mt-3">
+                <div className="col-lg-3 col-md-6 mt-3">
                     <div className="input-group">
                         <span className="input-group-text">Payment Type</span>
                         <Select
@@ -133,7 +135,33 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     </div>
                 </div>
 
-                <div className="col-md-3 mt-3">
+                <div className="col-lg-3 col-md-6 mt-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Address</span>
+                        <InputLazy
+                            defaultValue={state.filters.address}
+                            onChange={() => {}}
+                            action={(address) => setFilters({address})}
+                            className="form-control"
+                            placeholder='Address'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-6 mt-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Phone</span>
+                        <InputLazy
+                            defaultValue={state.filters.phone}
+                            onChange={() => {}}
+                            action={(phone) => setFilters({phone})}
+                            className="form-control"
+                            placeholder='Phone'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-6 mt-3">
                     <div className="input-group">
                         <RangePicker
                             allowEmpty={[true, true]}

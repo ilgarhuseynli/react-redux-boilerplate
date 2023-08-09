@@ -3,6 +3,7 @@ import {Loading, Spinner} from "@components";
 import Select from "react-select";
 import {userUpdate} from "@actions";
 import {AlertLib} from "@lib";
+import {AddressList} from "../../../components";
 
 export const InfoTab = React.memo(({state,setParams,setState}) => {
 
@@ -101,13 +102,9 @@ export const InfoTab = React.memo(({state,setParams,setState}) => {
                 </div>
 
                 <div className="col-md-6 mb-2">
-                    <label className="form-label">Address</label>
-                    <input
-                        value={state.params.address}
-                        onChange={(e) => setParams({address: e.target.value})}
-                        placeholder='Address'
-                        type='text'
-                        className="form-control"
+                    <AddressList
+                        list={state.params.address_list}
+                        setAddressList={(data)=>setParams({address_list:data})}
                     />
                 </div>
 

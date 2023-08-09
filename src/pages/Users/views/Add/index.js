@@ -4,6 +4,7 @@ import {
 } from "@components";
 import {AlertLib} from "@lib";
 import {userStore} from "@actions";
+import {AddressList} from "../../components";
 
 export const Add = React.memo(({onClose, reload, role}) => {
 
@@ -14,12 +15,11 @@ export const Add = React.memo(({onClose, reload, role}) => {
             showPassword: false,
             saveLoading: false,
             params: {
-                username: '',
                 name: '',
                 role: role,
                 surname: '',
                 phone: '',
-                address: '',
+                address_list: [],
                 email: '',
                 password: '',
                 password_confirmation: '',
@@ -85,23 +85,13 @@ export const Add = React.memo(({onClose, reload, role}) => {
     return (
         <Popup
             show={true}
-            size="lg"
+            size="xl"
             onClose={onClose}
             header={renderModalHeader()}
         >
             {state.loading && <Loading/>}
 
             <div className="row">
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Username</label>
-                    <input
-                        value={state.params.username}
-                        onChange={(e) => setParams({username: e.target.value})}
-                        placeholder='Username'
-                        className="form-control"
-                    />
-                </div>
 
                 {/*<div className="col-md-6 mb-2">*/}
                 {/*    <label className="form-label">Role</label>*/}
@@ -152,23 +142,23 @@ export const Add = React.memo(({onClose, reload, role}) => {
                         value={state.params.phone}
                         onChange={(e) => setParams({phone: e.target.value})}
                         placeholder='Phone'
-                        type='phone'
+                        type='number'
                         className="form-control"
                     />
                 </div>
 
                 <div className="col-md-6 mb-2">
-                    <label className="form-label">Address</label>
-                    <input
-                        value={state.params.address}
-                        onChange={(e) => setParams({address: e.target.value})}
-                        placeholder='Address'
-                        type='text'
-                        className="form-control"
+                    <AddressList
+                        list={state.params.address_list}
+                        setAddressList={(data)=>setParams({address_list:data})}
                     />
                 </div>
 
-                <div className="col-12"></div>
+                <div className="col-12">
+                    {/*hidden input. auto fill email problem*/}
+                    <input style={{opacity:0}} type='text'/>
+                </div>
+
 
                 <div className="col-md-6 mb-2">
                     <label className="form-label">Password</label>

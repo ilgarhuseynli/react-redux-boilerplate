@@ -8,10 +8,10 @@ export const TableCustom = ({state, setState,loadData}) => {
 
     const columns = [
         {
-            sort: "username",
-            name: Lang.get("Username"),
+            sort: "name",
+            name: Lang.get("Name"),
             render: (data) => (
-                <Link to={`edit/${data?.id}`}>{data?.username}</Link>
+                <Link to={`edit/${data?.id}`}>{data?.name} {data?.surname}</Link>
             ),
         },
         // {
@@ -20,6 +20,11 @@ export const TableCustom = ({state, setState,loadData}) => {
         //         <>{data.role.label}</>
         //     ),
         // },
+        {
+            name: Lang.get("Phone"),
+            key: 'phone',
+            center: false,
+        },
         {
             sort: 'email',
             name: Lang.get("Email"),

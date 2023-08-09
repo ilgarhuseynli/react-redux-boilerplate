@@ -16,7 +16,7 @@ export default function Users({role}){
             count: 0,
             skip: 0,
             limit: 10,
-            name: "",
+            keyword: "",
             selectedIDs: [],
             hiddenColumns: [],
             sort: "created_at",
@@ -32,7 +32,7 @@ export default function Users({role}){
             limit: state.limit || "",
             sort: state.sort || "",
             sort_type: state.sort_type || "",
-            username: state?.name || "",
+            keyword: state?.keyword || "",
             role: role,
         });
 
@@ -85,7 +85,7 @@ export default function Users({role}){
         state.sort,
         state.sort_type,
         role,
-        state.name,
+        state.keyword,
     ]);
 
     return(
