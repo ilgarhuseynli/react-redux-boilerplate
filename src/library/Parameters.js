@@ -1,3 +1,4 @@
+
 export class Parameters {
 
     static noImgUrl = process.env.publicPath+'/assets/images/no-img.png';
@@ -18,6 +19,23 @@ export class Parameters {
         return [
             {value: '0', label: 'InActive', color: '#ffd600'},
             {value: '1', label: 'Active', color: '#2dce89'},
+        ];
+    }
+
+    static getRangeTypes() {
+        return [
+            {
+                label: "CreatedAt",
+                value: "created_at",
+            },
+            {
+                label: "OrderAt",
+                value: "order_date",
+            },
+            {
+                label: "CompletedAt",
+                value: "completed_at",
+            },
         ];
     }
 

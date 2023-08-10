@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {multiList, orderDelete, orderList} from "@actions";
 import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
+import moment from "moment";
 
 export default function Order(){
     const navigate = useNavigate();
@@ -13,7 +14,8 @@ export default function Order(){
             loading: true,
             order_statuses:[],
             payment_types:[],
-            discount_types:[],
+            users:[],
+            employees:[],
             data: [],
             count: 0,
             skip: 0,
@@ -21,7 +23,12 @@ export default function Order(){
             filters: {
                 ticket: "",
                 status: "",
+                user: "",
+                creator: "",
                 payment_type: "",
+                total: {min:'',max:''},
+                discount: {min:'',max:''},
+                range_type: {label:'Created at',value:'created_at'},
                 range: { start:'', end:'' },
             },
             selectedIDs: [],
@@ -40,17 +47,22 @@ export default function Order(){
             sort: state.sort || "",
             sort_type: state.sort_type || "",
 
-            start: state.filters.range.start ? state.filters.range.start.startOf('day').unix() : "",
-            end: state.filters.range.end ? state.filters.range.end.endOf('day').unix() : "",
+            range_type: state.filters.range_type?.value || "",
+            // start: state.filters.range.start ? state.filters.range.start.startOf('day').unix() : "",
+            // end: state.filters.range.end ? state.filters.range.end.endOf('day').unix() : "",
 
-            sku: state.filters.sku || "",
-            title: state.filters.title || "",
-            position: state.filters.position?.value || "",
-            category: state.filters.category?.value || "",
+            start: state.filters.range.start ? moment(`${state.filters.range.start} 00:00:00`).unix() : "",
+            end: state.filters.range.end ? moment(`${state.filters.range.end} 23:59:59`).unix() : "",
+
+            ticket: state.filters.ticket || "",
+            user: state.filters.user?.value || "",
+            creator: state.filters.creator?.value || "",
             status: state.filters.status?.value || "",
+            payment_type: state.filters.payment_type?.value || "",
+            total: state.filters.total?.value || "",
+            discount: state.filters.discount?.value || "",
         });
 
-        console.log(state.filters.reange)
 
         if (response) {
             setState({ loading: false });
@@ -98,7 +110,8 @@ export default function Order(){
             keys:[
                 'order_statuses',
                 'payment_types',
-                'discount_types',
+                'users',
+                'employees',
             ]
         });
 

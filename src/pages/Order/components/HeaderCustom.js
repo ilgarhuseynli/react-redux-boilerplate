@@ -11,8 +11,6 @@ import moment from "moment";
 
 export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
-    const { RangePicker } = DatePicker;
-
     const columns = [
         {name: "Ticket number"},
         {name: "Address"},
@@ -163,16 +161,100 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
                 <div className="col-lg-3 col-md-6 mt-3">
                     <div className="input-group">
-                        <RangePicker
+                        <span className="input-group-text">Customer</span>
+                        <AsyncSelect
+                            isClearable
+                            cacheOptions
+                            loadOptions={(title) => loadMinList(title, 'users')}
+                            defaultOptions={state.users}
+                            value={state.filters.user}
+                            onChange={(user) => setFilters({user})}
+                            placeholder='All'
+                            className='form-control'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-6 mt-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Creator</span>
+                        <AsyncSelect
+                            isClearable
+                            cacheOptions
+                            loadOptions={(title) => loadMinList(title, 'employees')}
+                            defaultOptions={state.employees}
+                            value={state.filters.creator}
+                            onChange={(creator) => setFilters({creator})}
+                            placeholder='All'
+                            className='form-control'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-6 mt-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Total</span>
+                        <InputLazy
+                            defaultValue={state.filters.total.min}
+                            onChange={() => {}}
+                            action={(min) => setFilters({total:{...state.filters.total,min}})}
+                            className="form-control"
+                            placeholder='min'
+                            type='number'
+                        />
+                        <InputLazy
+                            defaultValue={state.filters.total.max}
+                            onChange={() => {}}
+                            action={(max) => setFilters({total:{...state.filters.total,max}})}
+                            className="form-control"
+                            placeholder='max'
+                            type='number'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-3 col-md-6 mt-3">
+                    <div className="input-group">
+                        <span className="input-group-text">Discount</span>
+                        <InputLazy
+                            defaultValue={state.filters.discount.min}
+                            onChange={() => {}}
+                            action={(min) => setFilters({discount:{...state.filters.discount,min}})}
+                            className="form-control"
+                            placeholder='min'
+                            type='number'
+                        />
+                        <InputLazy
+                            defaultValue={state.filters.discount.max}
+                            onChange={() => {}}
+                            action={(max) => setFilters({discount:{...state.filters.discount,max}})}
+                            className="form-control"
+                            placeholder='max'
+                            type='number'
+                        />
+                    </div>
+                </div>
+
+                <div className="col-lg-4 col-md-6 mt-3">
+                    <div className="input-group">
+                        <div className="input-group-prepend" style={{ width: "125px" }}>
+                            <Select
+                                className="form-control"
+                                value={state.filters.range_type}
+                                onChange={type => setFilters({range_type: type })}
+                                options={Parameters.getRangeTypes()}
+                            />
+                        </div>
+
+                        <DatePicker.RangePicker
                             allowEmpty={[true, true]}
-                            value={[
-                                state.filters.range.start ? state.filters.range.start : "",
-                                state.filters.range.end ? state.filters.range.end : "",
-                            ]}
+                            // value={[
+                            //     state.filters.range.start ? moment(state.filters.range.start,'YYYY-MM-DD') : "",
+                            //     state.filters.range.end ? moment(state.filters.range.end,'YYYY-MM-DD') : "",
+                            // ]}
                             onChange={(date, dateString) => {
-                                console.log(date)
                                 setFilters({
-                                    range: { start: date[0], end: date[1]},
+                                    range: { start: dateString[0], end: dateString[1]},
                                 });
                             }}
                             placeholder={['Start','End']}
@@ -180,7 +262,6 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                         />
                     </div>
                 </div>
-
             </div>
         </div>
     );
