@@ -7,7 +7,7 @@ import Select from "react-select";
 import {loadMinList} from "@actions";
 import AsyncSelect from "react-select/async";
 import DatePicker from "antd/lib/date-picker";
-import moment from "moment";
+import dayjs from 'dayjs';
 
 export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
@@ -235,9 +235,9 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                     </div>
                 </div>
 
-                <div className="col-lg-4 col-md-6 mt-3">
+                <div className="col-md-6 mt-3">
                     <div className="input-group">
-                        <div className="input-group-prepend" style={{ width: "125px" }}>
+                        <div className="input-group-prepend" style={{ width: "135px" }}>
                             <Select
                                 className="form-control"
                                 value={state.filters.range_type}
@@ -248,10 +248,10 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
                         <DatePicker.RangePicker
                             allowEmpty={[true, true]}
-                            // value={[
-                            //     state.filters.range.start ? moment(state.filters.range.start,'YYYY-MM-DD') : "",
-                            //     state.filters.range.end ? moment(state.filters.range.end,'YYYY-MM-DD') : "",
-                            // ]}
+                            value={[
+                                state.filters.range.start ? dayjs(state.filters.range.start,'YYYY-MM-DD') : "",
+                                state.filters.range.end ? dayjs(state.filters.range.end,'YYYY-MM-DD') : "",
+                            ]}
                             onChange={(date, dateString) => {
                                 setFilters({
                                     range: { start: dateString[0], end: dateString[1]},

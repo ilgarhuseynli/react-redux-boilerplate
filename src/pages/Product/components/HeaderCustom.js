@@ -7,7 +7,6 @@ import Select from "react-select";
 import {loadMinList} from "@actions";
 import AsyncSelect from "react-select/async";
 import DatePicker from "antd/lib/date-picker";
-import moment from "moment";
 
 export const HeaderCustom = ({state, setState, reload, onDelete}) => {
 
@@ -166,7 +165,6 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
                                 state.filters.range.end ? state.filters.range.end : "",
                             ]}
                             onChange={(date, dateString) => {
-                                console.log(date)
                                 setFilters({
                                     range: { start: date[0], end: date[1]},
                                 });

@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import {multiList, productDelete, productList} from "@actions";
 import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
-import moment from "moment";
 
 
 export default function Product(){
@@ -51,8 +50,6 @@ export default function Product(){
             category: state.filters.category?.value || "",
             status: state.filters.status?.value || "",
         });
-
-        console.log(state.filters.reange)
 
         if (response) {
             setState({ loading: false });

@@ -37,15 +37,15 @@ export const InfoTab = React.memo(({state,setParams,setState}) => {
 
             <div className="row">
 
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Username</label>
-                    <input
-                        value={state.params.username}
-                        onChange={(e) => setParams({username: e.target.value})}
-                        placeholder='Username'
-                        className="form-control"
-                    />
-                </div>
+                {/*<div className="col-md-6 mb-2">*/}
+                {/*    <label className="form-label">Username</label>*/}
+                {/*    <input*/}
+                {/*        value={state.params.username}*/}
+                {/*        onChange={(e) => setParams({username: e.target.value})}*/}
+                {/*        placeholder='Username'*/}
+                {/*        className="form-control"*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 {/*<div className="col-md-6 mb-2">*/}
                 {/*    <label className="form-label">Role</label>*/}

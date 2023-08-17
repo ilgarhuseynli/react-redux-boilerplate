@@ -22,6 +22,14 @@ export class Parameters {
         ];
     }
 
+
+    static getDiscountTypes() {
+        return [
+            {value: 'percent', label: '%',  },
+            {value: 'amount', label: 'AZN', },
+        ];
+    }
+
     static getRangeTypes() {
         return [
             {

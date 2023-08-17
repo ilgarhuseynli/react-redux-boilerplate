@@ -81,6 +81,22 @@
   }
 }
 
+.ant-select-dropdown,
+.ant-picker-dropdown{
+  z-index: 20000;
+}
+
+label{
+  position: relative;
+}
+
+label.required::after, label .required::after {
+  content: "*";
+  position: absolute;
+  right: -11px;
+  top: 0;
+  color: var(--bs-danger);
+}
 
 
 body[data-leftbar-theme=dark]{

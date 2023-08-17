@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {multiList, orderDelete, orderList} from "@actions";
 import {HeaderCustom, TableCustom, ViewRoutes} from "./components";
 import {AlertLib} from "@lib";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default function Order(){
     const navigate = useNavigate();
@@ -48,11 +48,9 @@ export default function Order(){
             sort_type: state.sort_type || "",
 
             range_type: state.filters.range_type?.value || "",
-            // start: state.filters.range.start ? state.filters.range.start.startOf('day').unix() : "",
-            // end: state.filters.range.end ? state.filters.range.end.endOf('day').unix() : "",
 
-            start: state.filters.range.start ? moment(`${state.filters.range.start} 00:00:00`).unix() : "",
-            end: state.filters.range.end ? moment(`${state.filters.range.end} 23:59:59`).unix() : "",
+            start: state.filters.range.start ? dayjs(`${state.filters.range.start} 00:00:00`).unix() : "",
+            end: state.filters.range.end ? dayjs(`${state.filters.range.end} 23:59:59`).unix() : "",
 
             ticket: state.filters.ticket || "",
             user: state.filters.user?.value || "",
