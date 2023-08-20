@@ -11,7 +11,7 @@ export const Add = React.memo(({onClose, reload}) => {
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
         {
-            activeTab: 'products',
+            activeTab: 'general',
             loading: true,
             address_list: [],
             showPassword: false,
@@ -23,6 +23,7 @@ export const Add = React.memo(({onClose, reload}) => {
             params: {
                 address : '',
                 phone : '',
+                name : '',
                 note : '',
                 manager_note : '',
                 customer : '',

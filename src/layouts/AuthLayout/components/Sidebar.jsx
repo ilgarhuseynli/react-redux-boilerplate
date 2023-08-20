@@ -122,7 +122,7 @@ const Sidebar = () => {
                                     <li >
                                         <Link to={url('home.productcategory')}  >
                                             <i className="uil-bright text-info"/>
-                                            <span> Categories </span>
+                                            <span> Product Categories</span>
                                         </Link>
                                     </li>
 

@@ -69,9 +69,9 @@ export const ItemsRow = ({state, onColumnChange,onDelete, item, index}) => {
                     className='form-control p-0 text-center'
                     onChange={(e) => onColumnChange(index,e.target.value, 'discount_type')}
                 >
-                    {Parameters.getDiscountTypes().map((item) => (
+                    {state.discount_types.map((item) => (
                         <option key={item.value} value={item.value}>
-                            {item.label}
+                            {item.sign}
                         </option>
                     ))}
                 </select>

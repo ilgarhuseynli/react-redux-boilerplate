@@ -21,24 +21,3 @@ body[data-leftbar-theme=dark] {
 }
 
 
-
-.table {
-  &__avatar {
-    padding: 0px;
-    border-radius: 10px;
-    background-color: transparent;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    line-height: 1rem;
-    margin-left: .5rem;
-    white-space: nowrap;
-    P, b {
-      color: var(--dark);
-    }
-  }
-}

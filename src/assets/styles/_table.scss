@@ -12,7 +12,43 @@
 //}
 
 
+
+
+.table-responsive{
+  display: block;
+  width: 100%;
+}
+
 .custom-table-container{
+
+  .table {
+    &__avatar {
+      padding: 0px;
+      border-radius: 10px;
+      background-color: transparent;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      line-height: 1rem;
+      margin-left: .5rem;
+      white-space: nowrap;
+      P, b {
+        color: var(--dark);
+      }
+    }
+
+    td,
+    th {
+      white-space: nowrap;
+    }
+
+  }
+
+
   .limit-select{
     padding: 0.375rem 2.5rem 0.375rem 0.9rem;
   }
@@ -21,4 +57,6 @@
     cursor: pointer;
   }
 }
+
+
 

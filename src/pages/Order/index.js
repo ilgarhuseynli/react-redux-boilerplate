@@ -32,7 +32,7 @@ export default function Order(){
                 range: { start:'', end:'' },
             },
             selectedIDs: [],
-            hiddenColumns: [],
+            hiddenColumns: [4,5,6,9],
             sort: "created_at",
             sort_type: "desc",
         }

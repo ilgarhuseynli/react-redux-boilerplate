@@ -6,7 +6,7 @@ export const prepareOrderReq = (params,action = 'add') =>{
         return {
             ...item,
             product_id:item.product.value,
-            discount_type:item.discount_type === 'percent' ? 1 : 2,
+            discount_type:item.discount_type,
         }
     });
 

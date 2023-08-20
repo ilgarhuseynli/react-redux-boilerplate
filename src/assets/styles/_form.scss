@@ -81,6 +81,26 @@
   }
 }
 
+
+.form-control.ant-select{
+  padding: 0.124rem 0.3rem;
+
+  .ant-select-selector{
+    box-shadow: none !important;
+    outline: none;
+    background: inherit;
+    border-radius: 0;
+    border: none;
+    color: white;
+  }
+
+  .ant-select-selection-placeholder,
+  .ant-select-selection-search{
+    color: var(--bs-dark);
+  }
+
+}
+
 .ant-select-dropdown,
 .ant-picker-dropdown{
   z-index: 20000;

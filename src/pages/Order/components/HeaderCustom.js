@@ -14,7 +14,6 @@ export const HeaderCustom = ({state, setState, reload, onDelete}) => {
     const columns = [
         {name: "Ticket number"},
         {name: "Address"},
-        {name: "Phone"},
         {name: "Customer"},
         {name: "Total"},
         {name: "Discount"},

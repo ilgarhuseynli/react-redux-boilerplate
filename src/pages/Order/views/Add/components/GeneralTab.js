@@ -16,6 +16,7 @@ export const GeneralTab = ({state, setParams,setState}) => {
             let response = await userInfo({id: customer.value});
 
             if (response.status === "success" && response.data) {
+                paramsBind['name'] = response.data.name+' '+response.data.surname;
                 paramsBind['phone'] = response.data.phone;
                 paramsBind['address'] = response.data.address_list[0];
 
@@ -41,6 +42,17 @@ export const GeneralTab = ({state, setParams,setState}) => {
                     placeholder='Customer'
                     className='form-control'
                     isLoading={state.loading}
+                />
+            </div>
+
+
+            <div className="col-md-6 mb-2">
+                <label className="form-label required">Name</label>
+                <input
+                    value={state.params.name}
+                    onChange={(e) => setParams({name: e.target.value})}
+                    placeholder='Name'
+                    className="form-control"
                 />
             </div>
 

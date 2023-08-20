@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
-import {InputCheckbox, InputFile, Loading, Popup, Spinner,} from "@components";
-import {AlertLib, Lang} from "@lib";
-import {loadMinList, multiList, productInfo, productUpdate, productFileUpload, productFileDelete} from "@actions";
-import AsyncSelect from "react-select/async";
-import Select from "react-select";
+import {Popup, Spinner,} from "@components";
+import {AlertLib} from "@lib";
+import {multiList, orderInfo, orderUpdate} from "@actions";
+import dayjs from 'dayjs';
+import {prepareOrderReq} from "../actions";
 import {useParams} from "react-router-dom";
+import {GeneralTab, ItemsTab} from "../Add/components";
 
 export const Edit = React.memo(({onClose, reload}) => {
 
@@ -13,23 +14,27 @@ export const Edit = React.memo(({onClose, reload}) => {
     const [state, setState] = React.useReducer(
         (prevState, newState) => ({...prevState, ...newState}),
         {
-            loadingMinList: true,
+            activeTab: 'general',
             loading: true,
-            file: true,
+            address_list: [],
             showPassword: false,
             saveLoading: false,
-            product_categories: [],
-            product_positions: [],
+            order_statuses : [],
+            payment_types : [],
+            discount_types : [],
+            users : [],
             params: {
                 id: urlParams?.id,
-                title : '',
-                slug : '',
-                sku : '',
-                description : '',
-                category : '',
-                position : 0,
-                status : 1,
-                price : '',
+                address : '',
+                phone : '',
+                name : '',
+                note : '',
+                manager_note : '',
+                customer : '',
+                payment_type : {label:'Cash',value:1},
+                status : {label:'Pending',value:1},
+                order_date : dayjs().format('YYYY-MM-DD').toString(),
+                items : [],
             }
         }
     );
@@ -38,15 +43,13 @@ export const Edit = React.memo(({onClose, reload}) => {
         setState({params: {...state.params, ...data}})
     }
 
-    const onSubmit = async (e) => {
+    const onSubmit = async () => {
         setState({saveLoading: true});
         if (!state.saveLoading) {
 
-            let response = await productUpdate({
-                ...state.params,
-                position:state.params.position?.value,
-                category_id:state.params.category?.value,
-            });
+            let requestParms = prepareOrderReq(state.params,'edit');
+
+            let response = await orderUpdate(requestParms);
 
             if (response) {
                 setState({saveLoading: false});
@@ -63,60 +66,49 @@ export const Edit = React.memo(({onClose, reload}) => {
         }
     };
 
-    const loadData = async () => {
 
-        let responseInfo = await productInfo({id: state.params.id});
+    const loadLists = async () => {
+        let responseInfo = await orderInfo({id: state.params.id});
 
-        if (responseInfo) {
-            if (responseInfo.status === "success") {
-                setParams(responseInfo.data);
-                setState({
-                    file:responseInfo.data.image,
-                    loading: false,
-                })
-            }
+        if (responseInfo.status === "success") {
+            setParams(responseInfo.data);
         }
 
-        let responseList = await multiList({keys:['product_categories','product_positions']});
+        let responseList = await multiList({
+            keys:[
+                'order_statuses',
+                'payment_types',
+                'discount_types',
+                'products',
+                'users',
+            ]
+        });
+
         if (responseList?.status === "success"){
             setState({
-                loadingMinList:false,
-                ...responseList.data,
+                loading:false,
+                ...responseList.data
             })
         }
     }
 
-
-    const uploadFile = async (avatar) => {
-        let response = await productFileUpload({file:avatar.name,product:state.params.id});
-
-        setState({file:response.data})
-
-        if (response?.status === "success"){
-            AlertLib.toast({
-                icon: response?.status,
-                title: response?.description,
-            });
-        }
-    };
-
-    const deleteFile = async () => {
-        let response = await productFileDelete({product:state.params.id});
-
-        setState({file:response.data})
-
-        if (response?.status === "success"){
-            AlertLib.toast({
-                icon: response?.status,
-                title: response?.description,
-            });
-        }
-    };
-
-
     useEffect(()=>{
-        loadData();
+        loadLists();
     },[])
+
+
+    const TABS = [
+        {
+            key:'general',
+            title:'General',
+            component:<GeneralTab state={state} setParams={setParams} setState={setState}/>,
+        },
+        {
+            key:'products',
+            title:'Products',
+            component:<ItemsTab state={state} setParams={setParams} setState={setState}/>,
+        },
+    ]
 
 
     const renderModalHeader = () => (
@@ -138,110 +130,33 @@ export const Edit = React.memo(({onClose, reload}) => {
         </div>
     )
 
+
     return (
         <Popup
             show={true}
-            size="lg"
+            size="xl"
             onClose={onClose}
             header={renderModalHeader()}
         >
-            <div className="row">
+            <div>
+                <ul className="nav nav-tabs nav-bordered mb-3">
+                    {TABS.map((item,key)=>(
+                        <li key={key} onClick={()=>setState({activeTab:item.key})} className="nav-item">
+                            <a href={`#${item.key}`} data-bs-toggle="tab" aria-expanded={item.key === state.activeTab}
+                               className={`nav-link ${item.key === state.activeTab && 'active'}`}>
+                                {item.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
 
-                {state.loading && <Loading />}
-
-                <div className="col-md-6 d-flex justify-content-center mb-2">
-                    <InputFile
-                        size={140}
-                        avatar={state.file}
-                        uploadFile={uploadFile}
-                        deleteFile={deleteFile}
-                        className="mx-3"
-                    />
+                <div className="tab-content position-relative">
+                    {TABS.map((item,key)=>(
+                        <div key={key} className={`tab-pane ${item.key === state.activeTab && 'show active'}`} id={item.key}>
+                            {state.activeTab === item.key && item.component}
+                        </div>
+                    ))}
                 </div>
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Title</label>
-                    <input
-                        value={state.params.title}
-                        onChange={(e) => setParams({title: e.target.value})}
-                        placeholder='Title'
-                        className="form-control"
-                    />
-                </div>
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Sku</label>
-                    <input
-                        value={state.params.sku}
-                        onChange={(e) => setParams({sku: e.target.value})}
-                        placeholder='sku'
-                        className="form-control"
-                    />
-                </div>
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Price</label>
-                    <input
-                        type='number'
-                        step='2'
-                        min='0'
-                        value={state.params.price}
-                        onChange={(e) => setParams({price: e.target.value})}
-                        placeholder='Price'
-                        className="form-control"
-                    />
-                </div>
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Category</label>
-                    <AsyncSelect
-                        isClearable
-                        cacheOptions
-                        loadOptions={(title) => loadMinList(title, 'product_categories')}
-                        defaultOptions={state.product_categories}
-                        value={state.params.category}
-                        onChange={(category) => setParams({category})}
-                        placeholder='Category'
-                        className='form-control'
-                        isLoading={state.loadingMinList}
-                    />
-                </div>
-
-
-                <div className="col-md-6 mb-2">
-                    <label className="form-label">Position</label>
-                    <Select
-                        isClearable
-                        options={state.product_positions}
-                        value={state.params.position}
-                        onChange={(position) => setParams({position})}
-                        placeholder='Position'
-                        className='form-control'
-                        isLoading={state.loadingMinList}
-                    />
-                </div>
-
-
-                <div className="col-12 mb-2">
-                    <label className="form-label">Description</label>
-                    <textarea
-                        value={state.params.description}
-                        onChange={(e) => setParams({description: e.target.value})}
-                        placeholder='Description'
-                        className="form-control"
-                    />
-                </div>
-
-                <div className="col-12">
-                    <InputCheckbox
-                        theme="primary"
-                        label={state.params.status === 1 ? Lang.get("Active") : Lang.get("InActive")}
-                        checked={!!state.params.status}
-                        onChange={(e) => setParams({status: e ? 1 : 0})}
-                        className='d-inline mt-2 float-end'
-                    />
-                </div>
-
             </div>
         </Popup>
     );
